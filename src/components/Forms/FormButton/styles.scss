@@ -1,0 +1,11 @@
+.btn{
+  background:brown;
+  padding:5px 10px;
+  width:100%;
+  color:white;
+  border:none;
+  outline:none;
+  &:focus{
+    outline-style:none;
+  }
+}
