@@ -1,13 +1,13 @@
 import businessTypes from "./business.types"
 
-export const createBusiness=(name)=>({
+export const createBusiness=(business)=>({
   type:businessTypes.CREATE_BUSINESS,
-  payload:name
+  payload:business
 })
 
-export const addBusiness=(name)=>({
+export const addBusiness=(business)=>({
   type:businessTypes.ADD_BUSINESS,
-  payload:name
+  payload:business
 })
 
 export const sucessCreateBusiness=()=>({
@@ -31,4 +31,19 @@ export const fetchBusinesses=()=>({
 export const setBusinesses=(businesses)=>({
   type:businessTypes.SET_BUSINESSES,
   payload:businesses
+})
+
+export const searchBusiness=(payload)=>({
+  type:businessTypes.SEARCH_BUSINESS,
+  payload:payload
+})
+
+export const setFilter=(payload)=>({
+  type:businessTypes.SET_FILTER,
+  payload
+})
+
+export const addBusinessInstance=(payload)=>({
+  type:businessTypes.ADD_BUSINESS_INSTANCE,
+  payload:payload
 })

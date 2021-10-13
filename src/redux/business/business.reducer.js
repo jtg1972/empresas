@@ -1,15 +1,17 @@
 import businessTypes from "./business.types";
-
+import businesses from "../../data/business";
+import { orderBusiness } from "./business.helpers";
 const INITIAL_STATE={
-  allBusiness:[],
+  allBusiness:orderBusiness(businesses),
   errorCreateBusiness:"",
   successCreateBusiness:false,
+  filteredData:[],
 }
 
 const businessReducer=(state=INITIAL_STATE,action)=>{
   switch (action.type) {
     case businessTypes.ADD_BUSINESS:
-      return {...state,allBusiness:[...state.allBusiness,action.payload]}
+      return {...state,allBusiness:orderBusiness([...state.allBusiness,action.payload])}
     case businessTypes.SUCCESS_CREATE_BUSINESS:
       return {...state,successCreateBusiness:action.payload}
 
@@ -22,6 +24,8 @@ const businessReducer=(state=INITIAL_STATE,action)=>{
 
     case businessTypes.FETCH_BUSINESSES:
       return {...state}
+    case businessTypes.SET_FILTER:
+      return {...state,filteredData:action.payload}
 
     default:
       return state;

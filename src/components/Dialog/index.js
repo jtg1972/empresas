@@ -2,7 +2,11 @@ import React from 'react'
 import Shadow from '../Shadow'
 import './styles.scss'
 
-const Dialog = ({children,open,closeDialog,headline}) => {
+const Dialog = ({children,
+  open,
+  closeDialog,
+  headline,
+  }) => {
   return (
     
       open?<div>

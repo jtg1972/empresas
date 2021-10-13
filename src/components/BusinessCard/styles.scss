@@ -1,0 +1,30 @@
+.businessCard{
+  display:flex;
+  flex-direction:column;
+  background-color:black;
+  border:1px solid white;
+
+  border-radius:10px;
+ 
+  margin:10px 25px;
+  height:100px;
+  .name{
+    padding:5px 10px;
+    color:white;
+    border-bottom:1px solid white;
+  }
+  .add{
+    display:block;
+    font-size:30px;
+    color:brown;  
+  }
+  .addDiv{
+    flex:1;
+    display:flex;
+    justify-content:flex-end;
+    align-items:flex-end;
+    padding-bottom:5px;
+    padding-right:5px;
+
+  }
+}

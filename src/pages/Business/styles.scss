@@ -4,4 +4,11 @@
   border-left:1px solid rgba(0,0,0,0.2);
   color:white;
   flex:1;
+  
+  
+  .containerCards{
+    height:auto;
+    display:grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
 }
