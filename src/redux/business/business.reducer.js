@@ -6,6 +6,7 @@ const INITIAL_STATE={
   errorCreateBusiness:"",
   successCreateBusiness:false,
   filteredData:[],
+  
 }
 
 const businessReducer=(state=INITIAL_STATE,action)=>{
@@ -21,7 +22,6 @@ const businessReducer=(state=INITIAL_STATE,action)=>{
       return {...state,
         errorCreateBusiness:"",
         successCreateBusiness:false,}
-
     case businessTypes.FETCH_BUSINESSES:
       return {...state}
     case businessTypes.SET_FILTER:

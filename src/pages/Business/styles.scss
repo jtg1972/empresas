@@ -1,9 +1,10 @@
 .business{
-  overflow:auto;
+  
   background:brown;
   border-left:1px solid rgba(0,0,0,0.2);
   color:white;
   flex:1;
+  overflow-y:auto;
   
   
   .containerCards{

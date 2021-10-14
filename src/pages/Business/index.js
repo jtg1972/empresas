@@ -4,7 +4,7 @@ import './styles.scss';
 import {MdAddCircleOutline} from 'react-icons/md'
 import FormInput from '../../components/Forms/FormInput';
 import FormButton from '../../components/Forms/FormButton';
-import { createBusiness, fetchBusinesses, resetCreateBusiness } from '../../redux/business/business.actions';
+import { createBusiness, fetchBusinesses, resetCreateBusiness, searchBusiness } from '../../redux/business/business.actions';
 import { useDispatch, useSelector } from 'react-redux';
 import Alert from '../../components/Alert';
 import BusinessCard from '../../components/BusinessCard';
@@ -32,7 +32,7 @@ const Business = () => {
 
   useEffect(()=>{
     dispatch(fetchBusinesses());
-    //dispatch(fetchBusinessInstances({}))
+    dispatch(searchBusiness({data:allBusiness,filter:""}))
   },[])
  
   

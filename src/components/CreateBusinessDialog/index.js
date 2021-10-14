@@ -2,11 +2,12 @@ import React,{useState,useEffect} from 'react'
 import Dialog from '../Dialog'
 import FormInput from '../Forms/FormInput';
 import FormButton from '../Forms/FormButton';
-import { createBusiness, fetchBusinesses, resetCreateBusiness } from '../../redux/business/business.actions';
+import { createBusiness, fetchBusinesses, resetCreateBusiness, searchBusiness } from '../../redux/business/business.actions';
 import { useDispatch, useSelector } from 'react-redux';
 import Alert from '../Alert';
 
 const mapState=({business})=>({
+  allBusiness:business.allBusiness,
   businessLength:business.allBusiness.length,
   errorBusiness:business.errorCreateBusiness,
   successBusiness:business.successCreateBusiness
@@ -16,6 +17,7 @@ const CreateBusinessDialog = ({toggleDialog,openDialog}) => {
 
   const dispatch=useDispatch()
   const {
+    allBusiness,
     businessLength,
     errorBusiness,
     successBusiness}=useSelector(mapState)
@@ -37,6 +39,10 @@ const CreateBusinessDialog = ({toggleDialog,openDialog}) => {
       console.log("entro effect")
       dispatch(resetCreateBusiness())
       cleanAndCloseDialog()
+      dispatch(searchBusiness({
+        data:allBusiness,
+        filter:business
+      }))
 
       setAlertText("Business has been added succesfully")
     }
