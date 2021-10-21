@@ -5,12 +5,16 @@ import FormButton from '../Forms/FormButton';
 import { createBusiness, fetchBusinesses, resetCreateBusiness, searchBusiness } from '../../redux/business/business.actions';
 import { useDispatch, useSelector } from 'react-redux';
 import Alert from '../Alert';
+import { fetchBusinessInstances } from '../../redux/businessInstance/actions';
+import businessInstanceSaga from '../../redux/businessInstance/sagas';
 
-const mapState=({business})=>({
+const mapState=({business,businessesInstances})=>({
   allBusiness:business.allBusiness,
   businessLength:business.allBusiness.length,
   errorBusiness:business.errorCreateBusiness,
-  successBusiness:business.successCreateBusiness
+  successBusiness:business.successCreateBusiness,
+  allBusinessInstances:businessesInstances.businessesInstances,
+
 })
 
 const CreateBusinessDialog = ({toggleDialog,openDialog}) => {
@@ -20,7 +24,8 @@ const CreateBusinessDialog = ({toggleDialog,openDialog}) => {
     allBusiness,
     businessLength,
     errorBusiness,
-    successBusiness}=useSelector(mapState)
+    successBusiness,
+    allBusinessInstances}=useSelector(mapState)
 
   
   const [business,setBusiness]=useState("")
@@ -43,6 +48,7 @@ const CreateBusinessDialog = ({toggleDialog,openDialog}) => {
         data:allBusiness,
         filter:business
       }))
+      dispatch(fetchBusinessInstances({data:allBusinessInstances,business:business.length}))
 
       setAlertText("Business has been added succesfully")
     }

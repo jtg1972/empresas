@@ -31,5 +31,5 @@ export const resetCreateBusinessInstance=()=>({
 
 export const successAddBusinessInstance=(payload)=>({
   type:types.SUCCESS_ADD_BUSINESS_INSTANCE,
-  payload:true
+  payload:payload
 })

@@ -16,7 +16,11 @@
   }
   .bu-sidebar{
     display:flex;
-    align-items:center;
+    flex-direction:row;
+    justify-content:space-between;
+    align-items:center;  
+    hyphens:auto;
+    
   }
   .icon{
     display:block;
@@ -26,12 +30,16 @@
     display:block;
   }
   li{
-    //display:block;
+    word-break: break-all;
+    display:block;
     padding:15px;
     border-bottom:1px solid var(--white);
     &:hover{
       background-color: var(--lightred);
     }
    
+  }
+  .active{
+    background:green;
   }
 }

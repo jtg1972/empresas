@@ -5,72 +5,84 @@ import FormInput from '../Forms/FormInput';
 import FormButton from '../Forms/FormButton';
 import { useDispatch, useSelector } from 'react-redux';
 import Alert from '../Alert';
-import { createBusinessInstance,
-        resetCreateBusinessInstance, 
-        setBusinessInstances } 
-        from '../../redux/businessInstance/actions';
+import { 
+  createBusinessInstance,
+  fetchBusinessInstances,
+  resetCreateBusinessInstance, 
+} 
+from '../../redux/businessInstance/actions';
 
 const mapState=({businessesInstances})=>({
   businessInstanceLength:businessesInstances.businessesInstances.length,
   errorBusinessInstance:businessesInstances.errorCreateBusinessInstance,
-  successBusinessInstance:businessesInstances.successCreateBusinessInstance
+  successBusinessInstance:businessesInstances.successCreateBusinessInstance,
+  allBusinessInstances:businessesInstances.businessesInstances
 })
 
-const AddBusinessInstance = ({toggleDialog,openDialog,businessId}) => {
+const AddBusinessInstance = ({
+  toggleDialog,
+  openDialog,
+  businessId,
+  businessName
+}) => {
   const dispatch=useDispatch()
-  console.log("bid",businessId)
+  //console.log("bid",businessId)
   const {
     businessInstanceLength,
     errorBusinessInstance,
-    successBusinessInstance}=useSelector(mapState)
+    successBusinessInstance,
+    allBusinessInstances,
+  }=useSelector(mapState)
 
-  
   const [businessInstance,setBusinessInstance]=useState("")
   const [alertText,setAlertText]=useState("")
   const [clsDialog,setClsDialog]=useState(false)
   
-
   const cleanAndCloseDialog=()=>{
     setBusinessInstance("")
     toggleDialog()
+    console.log("cleanandclose")
   }
-
 
   useEffect(()=>{
     if(successBusinessInstance===true){
-      console.log("entro effect")
       dispatch(resetCreateBusinessInstance())
+      //console.log("entro effect")
+      //console.log("opda",openDialog)
       cleanAndCloseDialog()
-
+      //console.log("opdd",openDialog)
       setAlertText("Business instance has been added succesfully")
+      dispatch(fetchBusinessInstances({
+        data:allBusinessInstances,
+        business:businessId
+      }))
     }
-  },
-  [successBusinessInstance])
+  },[successBusinessInstance])
 
-  
+  const title=businessName?
+    businessName+" Business Instance":
+    "Business Instance";
   
 
   const addBusiness=()=>{
-    console.log("addbusines")
+    //console.log("addbusines")
     dispatch(createBusinessInstance({
       business:businessId,
       name:businessInstance,
       id:businessInstanceLength+1}))
-    
-  
-    
   }
+
   const closeDialog=()=>{
     cleanAndCloseDialog()
     dispatch(resetCreateBusinessInstance())
     setAlertText("No business instance has been added")
-
     setClsDialog(true);
   }
 
   const displayError=()=>(
     <p className="error">{errorBusinessInstance}</p>
   )
+
   const displayAlert=(type)=>{
     return <Alert 
       setAlertText={setAlertText}
@@ -80,17 +92,19 @@ const AddBusinessInstance = ({toggleDialog,openDialog,businessId}) => {
       {alertText}
     </Alert>
   }
+
   return (
     <div>
       {openDialog &&
       <Dialog  
-        headline="Business Instance"
+        headline={title}
         closeDialog={closeDialog}
-        open={openDialog}
-        >
-      
+        open={openDialog}>
+
         {errorBusinessInstance!==""?
-          displayError():""}
+          displayError():
+          ""
+        }
 
         <FormInput type="text"
           placeholder="Business Instance Name"
@@ -100,11 +114,9 @@ const AddBusinessInstance = ({toggleDialog,openDialog,businessId}) => {
         <FormButton onClick={()=>{addBusiness()}}>Add Business Instance</FormButton>
 
       </Dialog>
-      }
-        
+      }        
       {alertText!=="" && clsDialog==false && displayAlert("success")}
       {alertText!=="" && clsDialog==true && displayAlert("danger")}
-      
     </div>
   )
 }

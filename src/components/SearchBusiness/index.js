@@ -1,17 +1,20 @@
 import React,{useState,useEffect} from 'react'
 import { useDispatch,useSelector } from 'react-redux';
 import { searchBusiness } from '../../redux/business/business.actions';
+import { fetchBusinessInstances } from '../../redux/businessInstance/actions';
 import FormInput from '../Forms/FormInput'
 
-const mapState=({business})=>({
+const mapState=({business,businessesInstances})=>({
   allBusiness:business.allBusiness,
-  filteredData:business.filteredData
+  filteredData:business.filteredData,
+  allBusinessInstances:businessesInstances.businessesInstances
 })
 
 const SearchBusiness = () => {
   const dispatch=useDispatch();
   const [business,setBusiness]=useState("");
-  const {allBusiness}=useSelector(mapState)
+  const {allBusiness,filteredData,
+  allBusinessInstances}=useSelector(mapState)
   const search=(payload)=>{
     dispatch(searchBusiness(payload));
   }
@@ -32,8 +35,14 @@ const SearchBusiness = () => {
       placeholder="Business"
       style={style}
       onKeyUp={(e)=>{
-        if(e.key=="Enter")
+        if(e.key=="Enter"){
           search({data:allBusiness,filter:business})
+          /*dispatch(fetchBusinessInstances({
+            data:allBusinessInstances,
+            business:filteredData[0].id
+
+          }))*/
+        }
       }} />
 
       

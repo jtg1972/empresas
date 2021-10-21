@@ -20,7 +20,7 @@ const mapState=({business,businessesInstances})=>({
   businessInstances:businessesInstances.businessesInstances
 })
 const Business = () => {
-  const [openDialog,setOpenDialog]=useState(false)
+  /*const [openDialog,setOpenDialog]=useState(false)
   const [businessId,setBusinessId]=useState(0)
   const toggleDialog=()=>setOpenDialog(!openDialog)
  
@@ -38,7 +38,7 @@ const Business = () => {
   
   return (
     <div className="business">
-      <SearchBusiness/>
+      
       <div className="containerCards">  
         {filteredData.map(b=>{
           return <BusinessCard  
@@ -57,7 +57,10 @@ const Business = () => {
       
     
     </div>
-  )
+  )*/
+  return (<div className="business">
+    <SearchBusiness/>
+  </div>);
 }
 
 export default Business;

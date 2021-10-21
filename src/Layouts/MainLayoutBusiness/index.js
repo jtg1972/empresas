@@ -1,14 +1,17 @@
-import React from 'react'
+import React,{useState} from 'react'
 import './styles.scss'
 
 import Navbar from '../../components/Navbar'
-import Sidebar from '../../components/Sidebar';
+import SidebarBusiness from '../../components/SidebarBusiness';
+import SidebarEnterprises from '../../components/SidebarEnterprises';
 export const MainLayout = ({children}) => {
+  const [business,setBusiness]=useState(0);
   return (
     <div className="mainLayout">
       <Navbar/>
       <div className="sidebarMenuAndContent">
-        <Sidebar></Sidebar>
+        <SidebarBusiness setBusiness={setBusiness}></SidebarBusiness>
+        <SidebarEnterprises businessId={business}/>
         <div className="content">
           {children}
         </div>
