@@ -1,0 +1,66 @@
+export default [
+  {
+    category:0,
+    fields:[{
+      fieldName:"name",
+      displayName:"Name",
+      dataType:"singleValue"
+    },{
+      fieldName:"price",
+      displayName:"Price",
+      dataType:"singleValue"
+    }]
+  },{
+    category:1,
+    fields:[{
+      fieldName:"foodType",
+      displayName:"Food Type",
+      dataType:"multipleValue",
+      values:[{
+        name:"Beverages",
+        value:"beverages"
+      },{
+        name:"Food",
+        value:"food"
+      }]
+    }]
+  },{ 
+  
+  category:2,
+  fields:[{
+    fieldName:"brand",
+    displayName:"Brand",
+    dataType:"multipleValue",
+    values:[{
+      value:"alpura",
+      name:"Alpura"
+    },{
+      value:"lala",
+      name:"Lala"
+    }]
+  
+  },{
+    fieldName:"flavor",
+    displayName:"Flavor",
+    dataType:"multipleValue",
+    values:[{
+      value:"vanilla",
+      name:"Vanilla"
+     },{
+       value:"strawberry",
+       name:"Strawberry"
+     }]
+  },{
+    fieldName:"type",
+    displayName:"Type",
+    dataType:"multipleValue",
+    values:[{
+      value:"normal",
+      name:"Normal"
+    },{
+      value:"light",
+      name:"Light"
+    }]
+
+  }]  
+}]

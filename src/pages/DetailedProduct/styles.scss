@@ -1,3 +1,37 @@
 .detailedProduct{ 
   color:white;
+  margin:15px;
+  .breadcrumb{
+    display:flex;
+    flex-direction:row;
+    flex-wrap: wrap;
+    margin-bottom:15px;
+    height:auto;
+  }
+  .pill{
+    display:flex;
+    align-items:center;
+    background:black;
+    padding:7px;
+    border-radius:10px;
+    margin-right:10px;
+    margin-bottom:10px;
+    span{
+      display:inline-block;
+    }
+    
+  }
+  table{
+    border-spacing:0px;
+    border-collapse:collapse;
+    td,th{
+      padding:5px;
+      
+    }
+    th{
+      background-color: black;
+      color:white;
+
+    }
+  }
 }
