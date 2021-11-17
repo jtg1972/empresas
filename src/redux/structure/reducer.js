@@ -1,11 +1,16 @@
 import structure from '../../data/structure'
-import { addFieldCat, addMultCat,createStructureEmpty,getFormFields,removeFieldCategory } from './helpers'
+import structureProducts from '../../data/structureProducts'
+import { addFieldCat, addMultCat,createStructureEmpty,editProduct,fetchFilterResults,getAllProductsFromCategoryDown,getFormFields,removeFieldCategory } from './helpers'
 import types from './types'
 
 const INITIAL_STATE={
   categoryStructures:structure,
   categoryStructure:{},
-  formFields:[]
+  formFields:[],
+  products:structureProducts,
+  productsFromStructure:[],
+  fieldCriterias:[],
+  productsFromFilter:[]
 }
 
 const structureReducer=(state=INITIAL_STATE,action)=>{
@@ -56,9 +61,56 @@ const structureReducer=(state=INITIAL_STATE,action)=>{
         ...state,
         formFields:gFF
       }
-    
+    case types.CREATE_PRODUCT_FROM_STRUCTURE:
+      return {
+        ...state,
+        products:[...state.products,action.payload],
+        productsFromStructure:[...state.productsFromStructure,action.payload]
+      }
+    case types.GET_PRODUCTS_FROM_STRUCTURE:
+      return {...state,
+      productsFromStructure:state.products.filter(p=>
+        p.category==action.payload.category)
+      }
+    case types.DELETE_PRODUCT_FROM_STRUCTURE:
+      const newProducts=state.products.filter(p=>
+        p.id!=action.payload.id)
+      return {...state,
+        products:newProducts,
+        productsFromStructure:newProducts.filter(np=>
+          np.category==action.payload.category)
+      }
+    case types.EDIT_PRODUCT_FROM_STRUCTURE:
+      const nP=editProduct(state.products,action.payload)
+      return {
+        ...state,
+        products:nP,
+        productsFromStructure:nP.filter(np=>
+          np.category==action.payload.category)
+      }
       
-    
+    case types.GET_ALL_PRODUCTS_FROM_CATEGORY_DOWN:
+      const gap=getAllProductsFromCategoryDown(state.products,action.payload)
+      return{
+        ...state,
+        productsFromStructure:gap
+      }
+    case types.ADD_FIELD_CRITERIA:
+      return {
+        ...state,
+        fieldCriterias:[...state.fieldCriterias,action.payload]
+      }
+    case types.REMOVE_FIELD_CRITERIA:
+      return {
+        ...state,
+        fieldCriterias:[...state.fieldCriterias.filter(
+          fc=>fc.fieldName!==action.payload
+        )]
+      }
+    case types.FETCH_FILTER_RESULTS:
+      return {
+        ...state,productsFromFilter:fetchFilterResults(state.productsFromStructure,action.payload)
+      }
     default:
       return state;
 

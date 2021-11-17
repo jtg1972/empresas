@@ -26,14 +26,12 @@ const AddBusinessInstance = ({
   businessName
 }) => {
   const dispatch=useDispatch()
-  //console.log("bid",businessId)
   const {
     businessInstanceLength,
     errorBusinessInstance,
     successBusinessInstance,
     allBusinessInstances,
   }=useSelector(mapState)
-
   const [businessInstance,setBusinessInstance]=useState("")
   const [alertText,setAlertText]=useState("")
   const [clsDialog,setClsDialog]=useState(false)
@@ -41,7 +39,6 @@ const AddBusinessInstance = ({
   const cleanAndCloseDialog=()=>{
     setBusinessInstance("")
     toggleDialog()
-    console.log("cleanandclose")
   }
 
   useEffect(()=>{

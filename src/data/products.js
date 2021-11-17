@@ -7,9 +7,9 @@ export default [
 },{
   id:2,
   category:1,
-  type:1,
+  type:0,
   name:"Lacteos"
-},{
+},/*{
   id:3,
   category:2,
   type:0,
@@ -19,13 +19,13 @@ export default [
   category:2,
   type:0,
   name:"Leche regular de coco"
-},{
+},*/{
   id:5,
   category:1,
-  type:1,
+  type:0,
   name:"Refrescos"
 
-},{
+},/*{
   id:6,
   category:5,
   type:0,
@@ -36,6 +36,6 @@ export default [
   category:5,
   type:0,
   name:"Sidral regular"
-}
+}*/
 
 ]

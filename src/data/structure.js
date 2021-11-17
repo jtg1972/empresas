@@ -4,11 +4,13 @@ export default [
     fields:[{
       fieldName:"name",
       displayName:"Name",
-      dataType:"singleValue"
+      dataType:"singleValue",
+      declaredType:"string"
     },{
       fieldName:"price",
       displayName:"Price",
-      dataType:"singleValue"
+      dataType:"singleValue",
+      declaredType:"number"
     }]
   },{
     category:1,
@@ -16,6 +18,7 @@ export default [
       fieldName:"foodType",
       displayName:"Food Type",
       dataType:"multipleValue",
+      declaredType:"string",
       values:[{
         name:"Beverages",
         value:"beverages"
@@ -31,6 +34,7 @@ export default [
     fieldName:"brand",
     displayName:"Brand",
     dataType:"multipleValue",
+    declaredType:"string",
     values:[{
       value:"alpura",
       name:"Alpura"
@@ -43,6 +47,7 @@ export default [
     fieldName:"flavor",
     displayName:"Flavor",
     dataType:"multipleValue",
+    declaredType:"string",
     values:[{
       value:"vanilla",
       name:"Vanilla"
@@ -54,6 +59,7 @@ export default [
     fieldName:"type",
     displayName:"Type",
     dataType:"multipleValue",
+    declaredType:"string",
     values:[{
       value:"normal",
       name:"Normal"
@@ -62,5 +68,33 @@ export default [
       name:"Light"
     }]
 
-  }]  
-}]
+  }]},{
+    category:5,
+    fields:[{
+      fieldName:"brand",
+      displayName:"Brand",
+      dataType:"multipleValue",
+      declaredType:"string",
+      values:[{
+        value:"Coca-cola",
+        name:"Coca-Cola"
+      },{
+        value:"Pepsi-cola",
+        name:"Pepsi-cola"
+      }]
+    
+    },{
+      fieldName:"size",
+      displayName:"size",
+      dataType:"multipleValue",
+      declaredType:"string",
+      values:[{
+        value:"big",
+        name:"big"
+       },{
+         value:"small",
+         name:"small"
+       }]
+    }]
+  }  
+]

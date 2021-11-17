@@ -1,22 +1,29 @@
 import React,{useState,useEffect} from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import structure from '../../data/structure';
-import { getFormFields } from '../../redux/structure/actions';
+import { getProductsFromStructure,addProduct } from '../../redux/structure/actions';
 import Dialog from '../Dialog'
 import DisplayFields from '../DisplayFields';
 import FormButton from '../Forms/FormButton';
 
+const mapToState=({structure})=>({
+  productsAmount:structure.products.length,
+  
+})
 
 const NewProduct = ({
   openDialog,
   toggleDialog,
   catName,
   formFields,
+  category
   
 }) => {
+    const dispatch=useDispatch()
+    const {productsAmount}=useSelector(mapToState)
     const [fields,setFields]=useState({})
     useEffect(()=>{
       setFields({})
+
     },[formFields])
    return (
     <Dialog
@@ -35,7 +42,16 @@ const NewProduct = ({
               setFields={setFields}/>
           )
         })}
-        <FormButton onClick={()=>{console.log("fields",fields)}}>
+        <FormButton onClick={()=>{
+          console.log("fields",fields)
+          dispatch(addProduct({
+            id:productsAmount+1,
+            category,
+            ...fields
+          }))
+          dispatch(getProductsFromStructure({category}))
+          
+        }}>
           Crear producto
         </FormButton>
       </Dialog>

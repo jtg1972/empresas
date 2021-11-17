@@ -34,3 +34,13 @@ export const addProduct=(payload)=>({
   type:types.ADD_PRODUCT,
   payload
 })
+
+export const getProductCategories=(payload)=>({
+  type:types.GET_PRODUCT_CATEGORIES,
+  payload
+})
+
+export const fetchFilterResults=(payload)=>({
+  type:types.FETCH_FILTER_RESULTS,
+  payload
+})
