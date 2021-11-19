@@ -16,14 +16,17 @@ const mapToState=({structure})=>({
 
 const AddFilter = ({
   openDialog,
-  toggleDialog
+  toggleDialog,
+  values,
+  setValues
 }) => {
 
   const {formFields,fieldCriterias}=useSelector(mapToState)
   const [fields,setFields]=useState({})
   const [currentField,setCurrentField]=useState({})
   const [addField,setAddField]=useState(false);
-  const [values,setValues]=useState({})
+  const [order,setOrder]=useState("")
+  //const [values,setValues]=useState({})
   const dispatch=useDispatch()
   const [operator,setOperator]=useState("igual")
   useEffect(()=>{
@@ -49,9 +52,9 @@ const AddFilter = ({
           <span style={{display:"block"}}>&nbsp;is&nbsp; </span>
           <select style={{flex:1,outline:"none"}}
             onChange={(e)=>{
-              setValues(v=>({...v,[campo.fieldName]:e.target.value}))         
+              setValues(v=>({...v,[campo.fieldName]:{...v[campo.fieldName],val:e.target.value}}))         
             }}
-            value={values[campo.fieldName]}
+            value={values[campo.fieldName]?.val}
           >
             <option value="">Select an option</option>
             {campo.values.map(v=>{
@@ -65,9 +68,17 @@ const AddFilter = ({
           
           }}>-</FormButton>
           <FormButton style={{width:"auto",marginLeft:"3px", marginBottom:"2px",marginTop:"0"}}
-            >U</FormButton>
+            onClick={()=>{
+              setOrder("asc")
+              setValues(v=>({...v,[campo.fieldName]:{...v[campo.fieldName],order:"asc"}}))
+
+            }}>U</FormButton>
           <FormButton style={{width:"auto",marginLeft:"3px", marginBottom:"2px",marginTop:"0"}}
-            >D</FormButton>
+            onClick={()=>{
+              setOrder("desc")
+              setValues(v=>({...v,[campo.fieldName]:{...v[campo.fieldName],order:"desc"}}))
+
+            }}>D</FormButton>
        </div>
   )
 }
@@ -78,9 +89,9 @@ const displaySingleValueString=(campo)=>{
         <span style={{display:"block"}}>{campo.fieldName} contains</span>&nbsp;
         <FormInput 
         style={{flex:1,marginBottom:"0",border:"none",borderBottom:"1px solid grey"}}
-        value={values[campo.fieldName]}
+        value={values[campo.fieldName]?.val}
         onChange={(e)=>{
-              setValues(values=>({...values,[campo.fieldName]:e.target.value}))
+              setValues(values=>({...values,[campo.fieldName]:{...values[campo.fieldName],val:e.target.value}}))
           }
         }
         placeholder={campo.fieldName}/>
@@ -91,9 +102,17 @@ const displaySingleValueString=(campo)=>{
         }
         }>-</FormButton>
         <FormButton style={{width:"auto",marginLeft:"3px", marginBottom:"2px",marginTop:"0"}}
-        >U</FormButton>
+        onClick={()=>{
+          
+          setValues(v=>({...v,[campo.fieldName]:{...v[campo.fieldName],order:"asc"}}))
+
+        }}>U</FormButton>
         <FormButton style={{width:"auto",marginLeft:"3px", marginBottom:"2px",marginTop:"0"}}
-        >D</FormButton>
+        onClick={()=>{
+          
+          setValues(v=>({...v,[campo.fieldName]:{...v[campo.fieldName],order:"desc"}}))
+
+        }}>D</FormButton>
     </div>)
   }
   
@@ -117,7 +136,7 @@ const displaySingleValueNumber=(campo)=>{
       value={values[campo.fieldName]?.val!==undefined?
       values[campo.fieldName].val:""} 
       onChange={(e)=>{
-            setValues(v=>({...v,[campo.fieldName]:{val:e.target.value,operator}}))
+            setValues(v=>({...v,[campo.fieldName]:{...v[campo.fieldName],val:e.target.value}}))
       }}
       placeholder={campo.fieldName}
       style={{marginBottom:0,marginBottom:"0",border:"none",borderBottom:"1px solid grey"
@@ -129,9 +148,17 @@ const displaySingleValueNumber=(campo)=>{
     }}
     >-</FormButton>
     <FormButton style={{width:"auto",marginLeft:"3px", marginBottom:"2px",marginTop:"0"}}
-      >U</FormButton>
+      onClick={()=>{
+        setOrder("asc")
+        setValues(v=>({...v,[campo.fieldName]:{...v[campo.fieldName],order:"asc"}}))
+
+      }}>U</FormButton>
     <FormButton style={{width:"auto",marginLeft:"3px", marginBottom:"2px",marginTop:"0"}}
-      >D</FormButton>
+      onClick={()=>{
+        setOrder("desc")
+        setValues(v=>({...v,[campo.fieldName]:{...v[campo.fieldName],order:"desc"}}))
+
+      }}>D</FormButton>
   </div>)
 }
 

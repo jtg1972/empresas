@@ -10,7 +10,7 @@ const INITIAL_STATE={
   products:structureProducts,
   productsFromStructure:[],
   fieldCriterias:[],
-  productsFromFilter:[]
+  //productsFromFilter:[]
 }
 
 const structureReducer=(state=INITIAL_STATE,action)=>{
@@ -109,8 +109,11 @@ const structureReducer=(state=INITIAL_STATE,action)=>{
       }
     case types.FETCH_FILTER_RESULTS:
       return {
-        ...state,productsFromFilter:fetchFilterResults(state.productsFromStructure,action.payload)
+        ...state,productsFromStructure:fetchFilterResults(state.productsFromStructure,action.payload)
       }
+
+    case types.DELETE_ALL_FILTERS:
+      return {...state,fieldCriterias:[]}
     default:
       return state;
 

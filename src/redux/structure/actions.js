@@ -74,3 +74,7 @@ export const fetchFilterResults=(payload)=>({
   type:types.FETCH_FILTER_RESULTS,
   payload
 })
+
+export const deleteAllFilters=()=>({
+  type:types.DELETE_ALL_FILTERS
+})

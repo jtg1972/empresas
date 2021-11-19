@@ -6,7 +6,7 @@ import FormButton from '../../components/Forms/FormButton'
 import SearchSubcategories from '../../components/SearchProducts'
 import StructureCategory from '../../components/StructureCategory'
 import StructureField from '../../components/StructureField'
-import { fetchAllStructures, getFormFields, getStructureCategory,getProductsFromStructure, deleteProduct, getAllProductsFromCategoryDown } from '../../redux/structure/actions'
+import { fetchAllStructures, getFormFields, getStructureCategory,getProductsFromStructure, deleteProduct, getAllProductsFromCategoryDown, deleteAllFilters } from '../../redux/structure/actions'
 import './styles.scss'
 import {IoIosRemoveCircleOutline} from 'react-icons/io'
 import { removeFieldCategory } from '../../redux/structure/actions'
@@ -60,6 +60,8 @@ const DetailedProduct = () => {
   const toggleAddFilterDialog=()=>setOpenAddFilterDialog(!openAddFilterDialog)
   const[camposState,setCamposState]=useState([])
   const[editFields,setEditFields]=useState({})
+  const [values,setValues]=useState({})
+  
   let catList=[];
   let campos=[];
   useEffect(()=>{
@@ -223,6 +225,8 @@ const DetailedProduct = () => {
         toggleDialog={toggleAddFilterDialog}
         setHasAddFilter={setHasAddFilter}
         hasAddFilter={hasAddFilter}
+        values={values}
+        setValues={setValues}
       />
 
     {strCategory!==undefined && 
@@ -284,7 +288,13 @@ const DetailedProduct = () => {
         <FormButton style={{background:"orange",color:"black",
       marginBottom:"5px"}} onClick={()=>toggleAddFilterDialog()}>Add Filter</FormButton>
           <FormButton style={{background:"orange",color:"black",
-      marginBottom:"5px"}} onClick={()=>toggleAddFilterDialog()}>Delete All Filters</FormButton>
+      marginBottom:"5px"}} onClick={()=>{
+        dispatch(deleteAllFilters())
+        setValues({})
+        dispatch(getProductCategories(category))
+        console.log("scateg",subCategories)
+        dispatch(getAllProductsFromCategoryDown({subCategories}))
+      }}>Delete All Filters</FormButton>
       
             {camposState.length>0 && 
             <tr>
