@@ -5,56 +5,72 @@ import Dialog from '../Dialog'
 import DisplayFields from '../DisplayFields';
 import FormButton from '../Forms/FormButton';
 
-const mapToState=({structure})=>({
+const mapToState=({structure,product})=>({
   productsAmount:structure.products.length,
-  
+  formFields:structure.formFields,
+  categoryObject:product.category
 })
 
 const NewProduct = ({
   openDialog,
   toggleDialog,
-  catName,
-  formFields,
-  category
   
 }) => {
-    const dispatch=useDispatch()
-    const {productsAmount}=useSelector(mapToState)
-    const [fields,setFields]=useState({})
-    useEffect(()=>{
-      setFields({})
+  const dispatch=useDispatch()
+  const {
+    categoryObject,
+    productsAmount,
+    formFields}
+  =useSelector(mapToState)
+  
+  const [fields,setFields]=useState({})
+  
+  useEffect(()=>{
+    setFields({})
+  },[formFields])
 
-    },[formFields])
+  const buttonClick=()=>{ 
+    dispatch(addProduct({
+      id:productsAmount+1,
+      category:categoryObject.id,
+      ...fields
+    }))
+    toggleDialog();
+    setFields({})
+  }
+
+  const dialogConfig={
+    open:openDialog,
+    closeDialog:toggleDialog,
+    headline:
+      "Add product of "+
+      categoryObject.name
+  }
+
+  const displayFieldsConfig=(ff,index)=>({
+    key:index,
+    structure:ff,
+    fields,
+    setFields:setFields
+  })
+
+  const formButtonConfig={
+    onClick:()=>buttonClick()
+  }
    return (
     <Dialog
-      open={openDialog}
-      closeDialog={toggleDialog}
-      headline={"Add product of "+catName}>
-        {/*<p>HOla new product</p>
-        <DisplayFields structure={2}/>*/}
-        {formFields.map((ff,index)=>{
-          console.log("ff",ff.id)
-          return (
-            <DisplayFields 
-              key={index} 
-              structure={ff}
-              fields={fields}
-              setFields={setFields}/>
-          )
-        })}
-        <FormButton onClick={()=>{
-          console.log("fields",fields)
-          dispatch(addProduct({
-            id:productsAmount+1,
-            category,
-            ...fields
-          }))
-          dispatch(getProductsFromStructure({category}))
-          
-        }}>
-          Crear producto
-        </FormButton>
-      </Dialog>
+      {...dialogConfig}
+    >
+      {formFields.map((ff,index)=>(
+        <DisplayFields
+          {...displayFieldsConfig(ff,index)} 
+        />
+        )
+      )}
+      <FormButton {...formButtonConfig}>
+        Crear producto
+      </FormButton>
+    </Dialog>
   )
 }
 

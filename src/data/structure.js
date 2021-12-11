@@ -69,7 +69,7 @@ export default [
     }]
 
   }]},{
-    category:5,
+    category:3,
     fields:[{
       fieldName:"brand",
       displayName:"Brand",

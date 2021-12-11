@@ -10,53 +10,73 @@ const INITIAL_STATE={
   products:structureProducts,
   productsFromStructure:[],
   fieldCriterias:[],
+  fields:[],
+  searchProductsFromStructure:[]
   //productsFromFilter:[]
 }
 
 const structureReducer=(state=INITIAL_STATE,action)=>{
   switch(action.type){
-    case types.FETCH_ALL_STRUCTURES:
-      return state;
-
+    
     case types.GET_STRUCTURE_CATEGORY:
-      console.log("sest1",action.payload.data)
-      return {...state,categoryStructure:action.payload.data.find(
-        cat=>cat.category==action.payload.category
-      )}
+      console.log("appp",action.payload)
+      console.log("sest1",state.categoryStructures)
+      const newCatStr=state.categoryStructures.find(c=>
+        c.category==action.payload.category)
+      console.log("newcatstr",newCatStr)
+      const bcIds=action.payload.breadCrumb.map(g=>g.id)
+      
+      const gffields=getFormFields({
+        data:state.categoryStructures,
+        categories:bcIds,
+        
+      })
+      const fields=gffields.map(fv=>{
+        return fv.fields.map(m=>m.fieldName)
+      })
+      /*const pfs=state.products.filter(p=>
+        p.category==action.payload.category)*/
+      const gap=getAllProductsFromCategoryDown(state.products,action.payload.subCategories)
+      return {...state,
+        categoryStructure:newCatStr,
+        formFields:gffields,
+        productsFromStructure:gap,
+        fields
+    }
     case types.ADD_MULTIPLE_VALUE:
 
       console.log("sest",action.payload)
-      console.log("sestest",action.payload.data)
+      //console.log("sestest",action.payload.data)
       const newCatSt=
-        addMultCat(action.payload)
+        addMultCat(state.categoryStructures,action.payload)
       return {...state,
         categoryStructures:newCatSt,
         categoryStructure:newCatSt.filter(r=>r.category===action.payload.category)[0]
       }
     case types.ADD_FIELD_CATEGORY:
       const nCS=
-        addFieldCat(action.payload)
+        addFieldCat(state.categoryStructures,action.payload)
       return {
         ...state,
         categoryStructures:nCS,
         categoryStructure:nCS.filter(r=>r.category==action.payload.category)[0]
       }
     case types.REMOVE_FIELD_CATEGORY:
-      const rCF=removeFieldCategory(action.payload)  
+      const rCF=removeFieldCategory(state.categoryStructures,action.payload)  
       return{
         ...state,
         categoryStructures:rCF,
         categoryStructure:rCF.filter(r=>r.category==action.payload.category)[0]
       }
     case types.CREATE_STRUCTURE_EMPTY:
-      const cSE=createStructureEmpty(action.payload)
+      const cSE=createStructureEmpty(state.categoryStructures,action.payload)
       return{
         ...state,
         categoryStructures:cSE,
         categoryStructure:cSE.filter(r=>r.category==action.payload.category)[0]
       }
     case types.GET_FORM_FIELDS:
-      const gFF=getFormFields(action.payload)
+      const gFF=getFormFields(state.categoryStructures,action.payload)
       return {
         ...state,
         formFields:gFF
@@ -77,24 +97,31 @@ const structureReducer=(state=INITIAL_STATE,action)=>{
         p.id!=action.payload.id)
       return {...state,
         products:newProducts,
-        productsFromStructure:newProducts.filter(np=>
-          np.category==action.payload.category)
+        productsFromStructure:state.productsFromStructure.filter(np=>
+          np.id!=action.payload.id)
       }
     case types.EDIT_PRODUCT_FROM_STRUCTURE:
       const nP=editProduct(state.products,action.payload)
       return {
         ...state,
         products:nP,
-        productsFromStructure:nP.filter(np=>
-          np.category==action.payload.category)
+        productsFromStructure:state.productsFromStructure.map(np=>{
+          if(np.id==action.payload.id){
+            return action.payload
+          } 
+          else
+            return np
+          }
+        )
+          
       }
       
-    case types.GET_ALL_PRODUCTS_FROM_CATEGORY_DOWN:
+    /*case types.GET_ALL_PRODUCTS_FROM_CATEGORY_DOWN:
       const gap=getAllProductsFromCategoryDown(state.products,action.payload)
       return{
         ...state,
         productsFromStructure:gap
-      }
+      }*/
     case types.ADD_FIELD_CRITERIA:
       return {
         ...state,
@@ -109,11 +136,12 @@ const structureReducer=(state=INITIAL_STATE,action)=>{
       }
     case types.FETCH_FILTER_RESULTS:
       return {
-        ...state,productsFromStructure:fetchFilterResults(state.productsFromStructure,action.payload)
+        ...state,searchProductsFromStructure:fetchFilterResults(state.productsFromStructure,action.payload)
       }
 
     case types.DELETE_ALL_FILTERS:
-      return {...state,fieldCriterias:[]}
+      return {...state,fieldCriterias:[],
+      searchProductsFromStructure:[]}
     default:
       return state;
 

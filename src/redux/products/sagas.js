@@ -2,7 +2,7 @@ import types from "./types"
 import {call,all,put,takeLatest} from 'redux-saga/effects'
 import { orderBusiness } from "../business/business.helpers"
 import { addProduct, setCategories, setSearchCategories } from "./actions";
-
+/*
 export function* fetchCategories({payload}){
   console.log("payload",payload)
   if(payload.category==-1){
@@ -20,7 +20,7 @@ export function* fetchCategories({payload}){
 
 export function* onFetchCategories(){
   yield takeLatest(types.FETCH_CATEGORIES,fetchCategories)
-}
+}*/
 
 export function* createProduct({payload}){
   yield put(addProduct(payload))
@@ -42,7 +42,7 @@ export function* onSearchCategories(){
 }
 
 export default function* productSaga(){
-  yield all([call(onFetchCategories),
+  yield all([//call(onFetchCategories),
             call(onSearchCategories),
             call(onCreateProduct)
           ])

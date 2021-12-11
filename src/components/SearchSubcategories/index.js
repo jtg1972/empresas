@@ -1,24 +1,23 @@
 import React,{useState,useEffect} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { createProduct, fetchCategories, searchCategories, setCategories } from '../../redux/products/actions'
-import getBreadCrumb from '../../utilities/generateBreadCrumb'
+import { createProduct, fetchCategories, getCategory, searchCategories, setCategories } from '../../redux/products/actions'
 import Dialog from '../Dialog'
 import FormButton from '../Forms/FormButton'
 import FormInput from '../Forms/FormInput'
+import DisplaySubcategoriesCombo from './DisplaySubcategoriesCombo.js'
 import './styles.scss'
 
 const mapToState=({product})=>({
   allCats:product.allCategories,
+  categoryObject:product.category,
   subcategories:product.categories,
-  scategories:product.searchCategories
+  scategories:product.searchCategories,
+  breadCrumb:product.breadCrumb
 })
 
 const SearchSubcategories = ({
-  catName,
-  setCatName,
+  category,
   setCategory,
-  category=0,
-  setBreadCrumb,
   openDialog,
   toggleDialog
 }) => {
@@ -27,165 +26,136 @@ const SearchSubcategories = ({
   const [isSearching,setIsSearching]=useState(false);
   const [search,setSearch]=useState("")
   const dispatch=useDispatch();
-  const {subcategories,allCats,scategories}=useSelector(mapToState)
-  
-  useEffect(()=>{
-    if(category==0){
-      dispatch(fetchCategories({
-        data:allCats,
-        category:-1
-      }))
-    }else{
-      dispatch(fetchCategories({
-        data:allCats,
-        category
-      }))
-    }
-  },[])
+  const {
+    allCats,
+    subcategories,
+    scategories,
+    categoryObject,
+  }=useSelector(mapToState)
 
   useEffect(()=>{
-    if(category==0){
-      dispatch(fetchCategories({
-        data:allCats,
-        category:-1
-      }))
-    }else{
-      dispatch(fetchCategories({
-        data:allCats,
-        category
-      }))
+    if(categoryObject.type==0 && openDialog==true){
+      toggleDialog()
     }
-  },[category])
+  },[categoryObject])
 
   const closeDialog=()=>{
     toggleDialog();
-    setCategory(0);
   }
+
+  
+
+  const addCategoryInputKeyUp=e=>{
+    if(e.key=="Enter"){
+      dispatch(createProduct({
+        id:allCats.length+1,
+        name:newCategory,
+        category:category,
+        type:1
+      }))
+      setIsSearching(false)
+      setCategory(category);
+      setNewCategory("");
+    }
+  }
+
+  const addProductsCategoryInputKeyUp=e=>{
+    if(e.key=="Enter"){
+      dispatch(createProduct({
+        id:allCats.length+1,
+        name:newProduct,
+        category:category,
+        type:0
+      }))
+      setIsSearching(false)
+      setCategory(category);
+      setNewProduct("");
+    }
+  }
+
+  const dialogConfig={
+    headline:`Category: ${categoryObject.name}`,
+    open:openDialog,
+    closeDialog:()=>closeDialog(),
+    type:categoryObject.type
+  }
+
+  const inputSearchCategoryConfig={
+    onChange:(e)=>setSearch(e.target.value),
+    placeholder:"Search subcategory",
+    value:search
+  }
+  const buttonSearchCategoryConfig={
+    onClick:()=>{
+      setIsSearching(true)
+      dispatch(searchCategories(
+        search
+      ))
+    }
+  }
+
+  const comboDisplaySubcategoriesNotSearch={
+    subCategories:subcategories,
+    setCategory,
+    setIsSearching:setIsSearching
+  }
+
+  const comboDisplaySubcategoriesSearch={
+    subCategories:scategories,
+    setCategory,
+    setIsSearching:setIsSearching
+  }
+
+  const inputAddCategoryConfig={
+    onChange:(e)=>setNewCategory(e.target.value),
+    placeholder:"Add Category",
+    value:newCategory,
+    className:"addCategoryInput",
+    onKeyUp:e=>addCategoryInputKeyUp(e)
+  }
+  const inputAddProductsCategoryConfig={
+    onChange:(e)=>setNewProduct(e.target.value),
+    placeholder:"Add Product Category",
+    value:newProduct,
+    className:"addCategoryInput",
+    onKeyUp:e=>addProductsCategoryInputKeyUp(e)
+  }
+
+  
   return (
-    openDialog && 
+    openDialog &&
     <Dialog 
-      headline={"Category: "+ catName}
-      open={openDialog}
-      closeDialog={()=>closeDialog()}>
+      {...dialogConfig}
+    >
       
       <FormInput 
-        onChange={(e)=>setSearch(e.target.value)}
-        placeholder="Search subcategory"
-        value={search}/>
+        {...inputSearchCategoryConfig}
+      />
       
       <FormButton
-        onClick={()=>{
-          setIsSearching(true)
-          dispatch(searchCategories(
-            {
-              data:subcategories,
-              search:search
-            }
-          ))
-        }}
+        {...buttonSearchCategoryConfig}   
       >
         Search
       </FormButton>
 
       {!isSearching 
-      ? subcategories.length>0 
-        && 
-        <div className="containerCombo">
-          <div className="scrollCombo">
-            {subcategories.map((sc,i)=>
-              <div 
-                className={
-                  sc.type==1
-                    ?"combo"
-                    :"comboDisabled"
-                } 
-                key={i} 
-                onClick={()=>{
-                  if(sc.type==1){
-                    setBreadCrumb(getBreadCrumb(allCats,sc.id));
-                    setCategory(sc.id);
-                    setCatName(sc.name)
-                  }
-                }}
-              >
-                {sc.name} 
-                {sc.type==1 
-                  ? "(category)"
-                  :"(product)"
-                }
-              </div>
-            )}
-          </div>
-        </div>
-      :scategories.length>0 
-        && 
-        <div className="containerCombo">
-          <div className="scrollCombo">
-            {scategories.map((sc,i)=>
-              <div 
-                className={
-                  sc.type==1
-                    ?"combo"
-                    :"comboDisabled"
-                } 
-                key={i}
-                onClick={()=>{
-                  if(sc.type==1){
-                    setBreadCrumb(getBreadCrumb(allCats,sc.id));
-                    setIsSearching(false);
-                    setCatName(sc.name)
-                    setCategory(sc.id);
-                  }
-                }}
-              >
-                {sc.name} 
-                {sc.type==1 
-                  ? "(category)" 
-                  :"(product)"
-                }
-              </div>
-              
-            )}
-          </div>
-        </div>
+      ?
+        <DisplaySubcategoriesCombo
+          {...comboDisplaySubcategoriesNotSearch}
+          />
+      :
+        <DisplaySubcategoriesCombo
+          {...comboDisplaySubcategoriesSearch}
+        />
       }
+      
       <FormInput 
-        onChange={(e)=>setNewCategory(e.target.value)}
-        placeholder="Add Category"
-        value={newCategory}
-        style={{marginTop:"10px"}}
-        onKeyUp={e=>{
-          if(e.key=="Enter"){
-            dispatch(createProduct({
-              id:allCats.length+1,
-              name:newCategory,
-              category:category,
-              type:1
-            }))
-            setIsSearching(false)
-            setCategory(category);
-            setNewCategory("");
-          }
-        }}
+        {...inputAddCategoryConfig}
       />
-      <FormInput 
-        onChange={(e)=>setNewProduct(e.target.value)}
-        placeholder="Add Product"
-        value={newProduct}
-        onKeyUp={e=>{
-          if(e.key=="Enter"){
-            dispatch(createProduct({
-              id:allCats.length+1,
-              name:newProduct,
-              category:category,
-              type:0
-            }))
-            setIsSearching(false)
-            setCategory(category);
-            setNewProduct("")
-          }
-        }}
+      <FormInput
+        {...inputAddProductsCategoryConfig}
       />
+    
     </Dialog>
   )
 }

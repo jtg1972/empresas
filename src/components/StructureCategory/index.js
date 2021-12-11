@@ -4,52 +4,57 @@ import { addMultipleValue, fetchAllStructures } from '../../redux/structure/acti
 import Dialog from '../Dialog'
 import FormInput from '../Forms/FormInput'
 
-const mapToState=({structure})=>{
-  console.log("structure",structure)
-   return {
-      categoryStructures:structure.categoryStructures
-  }
-}
+const mapToState=({product})=>({
+  categoryObject:product.category
+})
 
 const StructureCategory = ({
   openDialog,
   toggleDialog,
-  catName,
   category,
   multipleFieldName
-  }) => {
+}) => {
   
   const [mvInstance,setMvInstance]=useState("")
   const dispatch=useDispatch();
-  const {categoryStructures}=useSelector(mapToState)
-  /*useEffect(()=>{
-    dispatch(fetchAllStructures());
-  },[])*/
+  const {categoryObject}=useSelector(mapToState)
+  
+
+  const addMultipleValueClick=()=>{
+    dispatch(addMultipleValue({
+      category,
+      multipleField:multipleFieldName,
+      value:{
+        name:mvInstance,
+        value:mvInstance
+      }
+    }))
+  }
+
+  const dialogConfig={
+    headline:categoryObject.name + " - "+ multipleFieldName, 
+    open:openDialog, 
+    closeDialog:toggleDialog
+  }
+
+  const formInputConfig={
+    placeholder:"New instance of multiple value",
+    value:mvInstance,
+    onChange:(e)=>setMvInstance(e.target.value),
+    onKeyUp:(e)=>{
+      if(e.key=="Enter"){
+        addMultipleValueClick()     
+      }
+    }
+  }
 
   return (
     <Dialog 
-      headline={catName + " - "+ multipleFieldName} 
-      open={openDialog} 
-      closeDialog={toggleDialog}>
+      {...dialogConfig}
+    >
       <FormInput
-        placeholder="New instance of multiple value"
-        value={mvInstance}
-        onChange={(e)=>setMvInstance(e.target.value)}
-        onKeyUp={(e)=>{
-          if(e.key=="Enter"){
-            dispatch(addMultipleValue({
-              data:categoryStructures,
-              category,
-              multipleField:multipleFieldName,
-              value:{
-                name:mvInstance,
-                value:mvInstance
-              }
-            }))
-          }
-        }}
-      ></FormInput>
-      
+        {...formInputConfig}    
+      ></FormInput>  
     </Dialog>
   )
 }

@@ -1,25 +1,27 @@
 .detailedProduct{ 
   color:white;
   margin:15px;
-  .breadcrumb{
-    display:flex;
-    flex-direction:row;
-    flex-wrap: wrap;
-    margin-bottom:15px;
-    height:auto;
-  }
-  .pill{
-    display:flex;
-    align-items:center;
-    background:black;
-    padding:7px;
-    border-radius:10px;
-    margin-right:10px;
+  .addFirstButton{
+    width:auto;
+    background-color:orange;
+    color:black;
     margin-bottom:10px;
-    span{
-      display:inline-block;
-    }
-    
+  }
+  .addSecondButton{
+    width:auto;
+    background-color:orange;
+    color:black;
+    margin-bottom:10px;
+    margin-left:10px;
+  }
+
+  .titleLabel{
+    margin-bottom:5px;
+    margin-top:5px;
+    padding:5px;
+    color:white;
+    background-color:black;
+    width:fit-content;
   }
   table{
     border-spacing:0px;

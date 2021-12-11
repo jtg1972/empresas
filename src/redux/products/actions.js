@@ -5,9 +5,9 @@ export const allCategories=()=>({
   type:types.ALL_CATEGORIES
 })
 
-export const fetchCategories=(category)=>({
+export const fetchCategories=(payload)=>({
   type:types.FETCH_CATEGORIES,
-  payload:category
+  payload
 })
 
 export const setCategories=(payload)=>({
@@ -42,5 +42,10 @@ export const getProductCategories=(payload)=>({
 
 export const fetchFilterResults=(payload)=>({
   type:types.FETCH_FILTER_RESULTS,
+  payload
+})
+
+export const getCategory=(payload)=>({
+  type:types.GET_PRODUCT_CATEGORIES,
   payload
 })

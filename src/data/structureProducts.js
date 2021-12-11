@@ -51,7 +51,7 @@ export default [{
 },
 {
   id:6,
-  category:5,
+  category:3,
   name:"Coca cola",
   foodType:"beverages",
   price:987,
@@ -60,7 +60,7 @@ export default [{
 
 },{
   id:7,
-  category:5,
+  category:3,
   name:"Pepsi-cola",
   foodType:"beverages",
   price:934,

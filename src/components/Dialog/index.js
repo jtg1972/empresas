@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useEffect} from 'react'
 import Shadow from '../Shadow'
 import './styles.scss'
 
@@ -6,10 +6,11 @@ const Dialog = ({children,
   open,
   closeDialog,
   headline,
+  
   }) => {
   return (
     
-      open?<div>
+      open ?<div>
               <Shadow opacity={0.3}/>
               <div className="dialog">
                 <div className="header">

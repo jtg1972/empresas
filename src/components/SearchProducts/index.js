@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { createProduct, fetchCategories, searchCategories, setCategories } from '../../redux/products/actions'
-import getBreadCrumb from '../../utilities/generateBreadCrumb'
+//import getBreadCrumb from '../../utilities/generateBreadCrumb'
 import Dialog from '../Dialog'
 import FormButton from '../Forms/FormButton'
 import FormInput from '../Forms/FormInput'
@@ -11,7 +11,8 @@ import {FaPencilAlt} from 'react-icons/fa'
 const mapToState=({product})=>({
   allCats:product.allCategories,
   subcategories:product.categories,
-  scategories:product.searchCategories
+  scategories:product.searchCategories,
+  breadCrumb:product.breadCrumb
 })
 
 const SearchSubcategories = ({
@@ -31,32 +32,32 @@ const SearchSubcategories = ({
   const {subcategories,allCats,scategories}=useSelector(mapToState)
   
   useEffect(()=>{
-    if(category==0){
+   /*if(category==0){
       dispatch(fetchCategories({
         data:allCats,
         category:-1
       }))
     }else{
-      dispatch(fetchCategories({
-        data:allCats,
-        category
-      }))
-    }
-  },[])
-
-  useEffect(()=>{
-    if(category==0){
-      dispatch(fetchCategories({
-        data:allCats,
-        category:-1
-      }))
-    }else{
-      dispatch(fetchCategories({
-        data:allCats,
-        category
-      }))
-    }
+*/      dispatch(fetchCategories({
+          data:allCats,
+         category
+         }))
+    //}
   },[category])
+
+  /*useEffect(()=>{
+    if(category==0){
+      dispatch(fetchCategories({
+        data:allCats,
+        category:-1
+      }))
+    }else{
+      dispatch(fetchCategories({
+        data:allCats,
+        category
+      }))
+    }
+  },[category])*/
 
   const closeDialog=()=>{
     toggleDialog();
@@ -100,13 +101,13 @@ const SearchSubcategories = ({
                 onClick={()=>{
                   console.log("scid",sc.id);
                   if(sc.type==1){
-                    setBreadCrumb(getBreadCrumb(allCats,sc.id));
+                    //setBreadCrumb(getBreadCrumb(allCats,sc.id));
                     setCategory(sc.id);
-                    setCatName(sc.name)
+                    //setCatName(sc.name)
                   }else if(sc.type==0){
-                    setBreadCrumb(getBreadCrumb(allCats,sc.id));
+                    //setBreadCrumb(getBreadCrumb(allCats,sc.id));
                     setCategory(sc.id);
-                    setCatName(sc.name)
+                    //setCatName(sc.name)
                     closeDialog();
                   }
                 }}
@@ -130,14 +131,14 @@ const SearchSubcategories = ({
                 key={i}
                 onClick={()=>{
                   if(sc.type==1){
-                    setBreadCrumb(getBreadCrumb(allCats,sc.id));
+                    //setBreadCrumb(getBreadCrumb(allCats,sc.id));
                     setIsSearching(false);
-                    setCatName(sc.name)
+                    //setCatName(sc.name)
                     setCategory(sc.id);
                   }else if(sc.type==0){
-                    setBreadCrumb(getBreadCrumb(allCats,sc.id));
+                    //setBreadCrumb(getBreadCrumb(allCats,sc.id));
                     setIsSearching(false);
-                    setCatName(sc.name)
+                    //setCatName(sc.name)
                     setCategory(sc.id);
                     closeDialog();
                   }

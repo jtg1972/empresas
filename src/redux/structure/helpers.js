@@ -1,8 +1,8 @@
 import { createContext } from "react"
 
-export const addMultCat=(payload)=>{
+export const addMultCat=(data,payload)=>{
   console.log("def",payload)
-  const resultado=payload.data.map(st=>{
+  const resultado=data.map(st=>{
     
     if(st.category!=payload.category){
       return st
@@ -29,8 +29,8 @@ export const addMultCat=(payload)=>{
   
 }
 
-export const addFieldCat=(payload)=>{
-  const resultado=payload.data.map(cat=>{
+export const addFieldCat=(data,payload)=>{
+  const resultado=data.map(cat=>{
     if(cat.category!=payload.category){
       return cat
     }else{
@@ -46,9 +46,9 @@ export const addFieldCat=(payload)=>{
   return resultado; 
 }
 
-export const removeFieldCategory=(payload)=>{
+export const removeFieldCategory=(data,payload)=>{
   console.log("paydev",payload);
-  const resultado=payload.data.map((cat)=>{
+  const resultado=data.map((cat)=>{
     if(cat.category!=payload.category){
       return cat
     }else{
@@ -65,23 +65,23 @@ export const removeFieldCategory=(payload)=>{
   return resultado;
 }
 
-export const createStructureEmpty=payload=>{
-  const exists=payload.data.find(cat=>
+export const createStructureEmpty=(data,payload)=>{
+  const exists=data.find(cat=>
     cat.category==payload.category)
   console.log("exists",exists);
   if(exists){
-    return payload.data
+    return data
   }else{
-    payload.data.push({
+    data.push({
       category:payload.category,
       fields:[]
     })
-    return payload.data
+    return data
   }
 }
 
-export const getFormFields=(payload)=>{
-  const fields=payload.data.filter(cat=>payload.categories.includes(cat.category))
+export const getFormFields=({data,categories})=>{
+  const fields=data.filter(cat=>categories.includes(cat.category))
   return fields
 }
 
@@ -97,7 +97,8 @@ export const editProduct=(products,payload)=>{
 }
 
 export const getAllProductsFromCategoryDown=(products,payload)=>{
-  const newProductAllSubcategories=products.filter(p=>payload.subCategories.includes(p.category))
+  const newProductAllSubcategories=products.filter(p=>payload.includes(p.category))
+  console.log("newpalcat",newProductAllSubcategories)
   return newProductAllSubcategories
 }
 
@@ -124,6 +125,8 @@ export const fetchFilterResults=(data,payload)=>{
     
   })
   console.log("Finalresults",finalResults)
+  
+  
   const sortResults=finalResults.sort((a,b)=>{
     console.log("ab",a,b)
     let conds=Object.keys(payload).map(key=>{
@@ -177,3 +180,4 @@ export const fetchFilterResults=(data,payload)=>{
   
   return sortResults
 }
+

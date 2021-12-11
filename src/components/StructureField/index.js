@@ -1,63 +1,93 @@
 import React,{useState,useEffect} from 'react'
 import { useSelector,useDispatch } from 'react-redux'
-import { addFieldCategory, fetchAllStructures } from '../../redux/structure/actions'
+import { addFieldCategory,getStructureCategory } from '../../redux/structure/actions'
 import Dialog from '../Dialog'
 import FormButton from '../Forms/FormButton'
 import FormInput from '../Forms/FormInput'
 
-const mapToState=({structure})=>({
-  allStructures:structure.categoryStructures
+import './styles.scss'
+const mapToState=({product,structure})=>({
+  categoryObject:product.category,
+  subCategories:product.subCategories,
+  breadCrumb:product.breadCrumb
+
 })
 
 const StructureField = ({
   openDialog,
   toggleDialog,
-  catName,
-  category}) => {
-  const {allStructures}=useSelector(mapToState)
+  category,
+  }) => {
+  
+  const {categoryObject,
+    subCategories,
+    breadCrumb}=
+  useSelector(mapToState)
+  
   const [fieldName,setFieldName]=useState("")
   const [displayName,setDisplayName]=useState("")
   const [type,setType]=useState("singleValue")
+  
   const dispatch=useDispatch()
-  console.log("categoryfield",category);
+    
+  const onAddFieldClick=()=>{
+    dispatch(addFieldCategory({
+      category,
+      value:{
+        fieldName,
+        displayName,
+        dataType:type
+      }
+    }))
+    dispatch(getStructureCategory({category,subCategories,breadCrumb}))
 
-  useEffect(()=>{
-    console.log("categoryfield",category)
-    dispatch(fetchAllStructures())
-  },[])
+  }
+
+  const dialogConfig={
+    open:openDialog,
+    closeDialog:()=>toggleDialog(),
+    headline:"Add field to "+ categoryObject.name
+  }
+
+  const inputFieldNameConfig={
+    onChange:e=>setFieldName(e.target.value),
+    value:fieldName, 
+    placeholder:"Field Name"
+  }
+
+  const inputDisplayNameConfig={
+    placeholder:"Display Name",
+    onChange:e=>setDisplayName(e.target.value),
+    value:displayName
+  }
+  
+  const selectConfig={
+    className:"noOutline", 
+    onChange:(e)=>setType(e.target.value)
+  }
+
+  const buttonAddFieldConfig={
+    className:"marginTop10",
+    onClick:()=>onAddFieldClick()
+      
+  }
+
+
   return (
     <Dialog 
-      open={openDialog}
-      closeDialog={toggleDialog}
-      headline={"Add field to "+ catName}
+     {...dialogConfig}
     >
       <FormInput
-        onChange={e=>setFieldName(e.target.value)}
-        value={fieldName} 
-        placeholder="Field Name"
-      ></FormInput>
+        {...inputFieldNameConfig}/>
       <FormInput
-        placeholder="Display Name"
-        onChange={e=>setDisplayName(e.target.value)}
-        value={displayName}>
-      </FormInput>
-      <select style={{outline:"none"}} onChange={(e)=>setType(e.target.value)}>
+        {...inputDisplayNameConfig}/>      
+      <select {...selectConfig}>
         <option value="singleValue">Single Value</option>
         <option value="multipleValue">Multiple Value</option>
       </select>
-      <FormButton 
-        style={{marginTop:"10px"}}
-        onClick={()=>{
-          dispatch(addFieldCategory({
-            data:allStructures,
-            category,
-            value:{
-              fieldName,
-              displayName,
-              dataType:type
-            }
-          }))
-        }}>Add Field</FormButton>
+      <FormButton {...buttonAddFieldConfig}>
+        Add Field
+      </FormButton>
     </Dialog>
       
     

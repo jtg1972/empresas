@@ -1,5 +1,11 @@
 export default [
 {
+  id:0,
+  category:null,
+  type:1,
+  name:"Categories"
+},
+{
   id:1,
   category:0,
   type:1,
@@ -20,7 +26,7 @@ export default [
   type:0,
   name:"Leche regular de coco"
 },*/{
-  id:5,
+  id:3,
   category:1,
   type:0,
   name:"Refrescos"
