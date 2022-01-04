@@ -1,0 +1,213 @@
+export default [{
+  category:0,
+  name:"Only name",
+  queryFields:[{
+    
+      fieldName:"name",
+      displayName:"Name",
+      dataType:"singleValue",
+      declaredType:"string"
+    
+  }],
+  queryGroups:[{
+    
+    fieldName:"name",
+    displayName:"Name",
+    dataType:"singleValue",
+    declaredType:"string"
+  
+  }]
+},
+{
+  category:0,
+  name:"Name and price",
+  queryFields:[{
+    fieldName:"name",
+    displayName:"Name",
+    dataType:"singleValue",
+    declaredType:"string"
+    
+  },{
+    fieldName:"price",
+    displayName:"Price",
+    declaredType:"number",
+    dataType:"singleValue"
+  }
+  ],
+  queryGroups:[{
+    fieldName:"name",
+    displayName:"Name",
+    dataType:"singleValue",
+    declaredType:"string"
+    
+  },{
+    fieldName:"price",
+    displayName:"Price",
+    declaredType:"number",
+    dataType:"singleValue"  
+  }]
+},{
+  category:2,
+  name:"Groups type of milk and foodType",
+  queryFields:[{
+    dataType:"singleValue",
+    declaredType:"string",
+    displayName:"Name",
+    fieldName:"name"
+  },{
+    dataType:"singleValue",
+    declaredType:"number",
+    displayName:"Price",
+    fieldName:"price"
+  },{
+    dataType:"multipleValue",
+    declaredType:"string",
+    displayName:"Food Type",
+    fieldName:"foodType",
+    values:[{
+      name:"Beverages",
+      value:"beverages"
+    },{
+      name:"Food",
+      value:"food"
+    }]
+  },{
+    dataType:"multipleValue",
+    declaredType:"string",
+    displayName:"Flavor",
+    fieldName:"flavor",
+    values:[{
+      value:"vanilla",
+      name:"Vanilla"
+    },{
+      value:"strawberry",
+      name:"Strawberry"
+    }]
+  },{
+    dataType:"multipleValue",
+    declaredType:"string",
+    displayName:"Type",
+    fieldName:"type",
+    values:[{
+      name:"Normal",
+      value:"normal"
+    },{
+      name:"Light",
+      value:"light"
+    }]
+  }],
+  queryGroups:[{
+    dataType:"multipleValue",
+    declaredType:"string",
+    displayName:"Type",
+    fieldName:"type",
+    values:[{
+      name:"Normal",
+      value:"normal"
+    },{
+      name:"Light",
+      value:"light"
+    }]
+  },{
+    dataType:"multipleValue",
+    declaredType:"string",
+    displayName:"Food Type",
+    fieldName:"foodType",
+    values:[{
+      name:"Beverages",
+      value:"beverages"
+    },{
+      name:"Food",
+      value:"food"
+    }
+  ]
+  }]
+},{
+  category:2,
+  name:"Por grupos de brand y type of milk",
+  queryFields:[{
+    dataType:"singleValue",
+    declaredType:"string",
+    displayName:"Name",
+    fieldName:"name"
+  },{
+    dataType:"singleValue",
+    declaredType:"number",
+    displayName:"Price",
+    fieldName:"price"
+  },{
+    dataType:"multipleValue",
+    declaredType:"string",
+    displayName:"Food Type",
+    fieldName:"foodType",
+    values:[{
+      name:"Beverages",
+      value:"beverages"
+    },{
+      name:"Food",
+      value:"food"
+    }]
+  },{
+    dataType:"multipleValue",
+    declaredType:"string",
+    displayName:"Brand",
+    fieldName:"brand",
+    values:[{
+      name:"Alpura",
+      value:"alpura"
+    },{
+      name:"Lala",
+      value:"lala"
+    }]
+  },{
+    dataType:"multipleValue",
+    declaredType:"string",
+    displayName:"Flavor",
+    fieldName:"flavor",
+    values:[{
+      name:"Vanilla",
+      value:"vanilla"
+    },{
+      name:"Strawberry",
+      value:"strawberry"
+    }]
+  },{
+    dataType:"multipleValue",
+    declaredType:"string",
+    displayName:"Type",
+    fieldName:"type",
+    values:[{
+      name:"Normal",
+      value:"normal"
+    },{
+      name:"Light",
+      value:"light"
+    }]
+  }],
+  queryGroups:[{
+    dataType:"multipleValue",
+    declaredType:"string",
+    displayName:"Brand",
+    fieldName:"brand",
+    values:[{
+      name:"Alpura",
+      value:"alpura"
+    },{
+      name:"Lala",
+      value:"lala"
+    }]
+
+  },{
+    dataType:"multipleValue",
+    declaredType:"string",
+    displayName:"Type",
+    fieldName:"type",
+    values:[{
+      name:"Normal",
+      value:"normal"
+    },{
+      name:"Light",
+      value:"light"
+    }]
+  }]
+}]

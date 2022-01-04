@@ -1,8 +1,8 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { deleteProduct } from '../../redux/structure/actions';
-import DisplayTable from './DisplayTable';
-import DisplayTableHeader from './DisplayTableHeader';
+import { deleteProduct } from '../../../redux/structure/actions';
+import DisplayTable from '../DisplayTable';
+
 const mapToState=({structure})=>({
   productsFromStructure:structure.productsFromStructure,
   fields:structure.fields,
@@ -32,11 +32,11 @@ const DisplayProductsTable = ({
       dispatch(fetchFilterResults(values))
   }*/
   return (
-    <table>
-      <DisplayTableHeader
+    <div>
+      {/*<DisplayTableHeader
         fields={fields}
         searchProductsFilter={searchProductsFilter}
-      />
+      />*/}
       {searchProductsFilter 
       ?
       <DisplayTable
@@ -57,7 +57,7 @@ const DisplayProductsTable = ({
         values={values}
       />
     }
-    </table>
+    </div>
   )
 }
 

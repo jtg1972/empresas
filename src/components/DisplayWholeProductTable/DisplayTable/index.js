@@ -3,7 +3,7 @@ import { BsPencilFill } from 'react-icons/bs';
 import { IoIosRemoveCircleOutline } from 'react-icons/io';
 import { useDispatch } from 'react-redux';
 import { deleteAllFilters, deleteProduct, fetchFilterResults } from '../../../redux/structure/actions';
-
+import './styles.scss'
 const DisplayTable = ({
   data,
   fields,
@@ -15,7 +15,15 @@ const DisplayTable = ({
 }) => {
   const dispatch=useDispatch()
   return (
-    data.map(pfs=>
+    <table>
+      <tr>
+        {fields.map(f=>{
+          return f.map(x=><th>{x}</th>)
+        })}
+        <th>Editar producto</th>
+        <th>Eliminar producto</th>
+      </tr>
+    {data.map(pfs=>
       (
       <tr>
         {fields.map(c=>c.map(x=>
@@ -48,6 +56,8 @@ const DisplayTable = ({
         
       </tr>
       ))
+        }
+    </table>
   )
 }
 

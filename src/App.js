@@ -8,18 +8,46 @@ import {Provider} from 'react-redux'
 import store from './redux/store'
 import MainLayoutProducts from './Layouts/MainLayoutProducts';
 import DetailedProduct from './pages/DetailedProduct';
+import Reports from './pages/Reports';
+
+import {BrowserRouter,Routes,Route} from 'react-router-dom'
 function App() {
   return (
     <Provider store={store}>
+      <BrowserRouter>
+      <Routes>
       {/*<MainLayoutBusiness>
         <Home/>
       </MainLayoutBusiness>*/}
       {/*<MainLayoutProducts>
         <Products/>
       </MainLayoutProducts>*/}
-      <MainLayoutProducts>
-        <DetailedProduct/>
-      </MainLayoutProducts>
+      <Route exact path="/"
+      element={
+        <MainLayoutProducts>
+          <DetailedProduct/>
+        </MainLayoutProducts>}>
+          
+        </Route>
+        <Route path="/products"
+        element={
+          <MainLayoutProducts>
+            <DetailedProduct/>
+          </MainLayoutProducts>
+        }
+        >
+          
+        </Route>
+        <Route path="/reports"
+        element={
+          <MainLayoutProducts>
+            <Reports/>
+          </MainLayoutProducts>
+        }>
+          
+        </Route>
+        </Routes>
+      </BrowserRouter>
     </Provider>
   );
 }

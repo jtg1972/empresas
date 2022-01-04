@@ -5,9 +5,10 @@ import { getFormFields, getStructureCategory,getProductsFromStructure, getAllPro
 import './styles.scss'
 import { fetchCategories, getProductCategories } from '../../redux/products/actions'
 import Breadcrumb from '../../components/Breadcrumb'
-import DisplayCategoryFieldsTable from '../../components/DisplayCategoryFieldsTable'
-import DisplayProductsTable from '../../components/DisplayProductsTable'
 import DialogsOfProductsDetails from '../../components/DialogsOfProductsDetails'
+import DisplayWholeCategoryFieldsTable from '../../components/DisplayWholeCategoryFieldsTable'
+import DisplayWholeProductsTable from '../../components/DisplayWholeProductTable'
+import ShowReport from '../../components/ShowReport'
 
 const mapToState=({structure,product})=>({
   strCategory:structure.categoryStructure,
@@ -65,13 +66,18 @@ const DetailedProduct = () => {
   let catList=[];
   let campos=[];
   console.log("catobjectrr",categoryObject)
-    
+  
+  const callCategoryStructure=()=>{
+    dispatch(getStructureCategory({category,subCategories,breadCrumb}))
+  }
+
   useEffect(()=>{
     dispatch(fetchCategories(category))
   },[category])
 
   useEffect(()=>{
-    dispatch(getStructureCategory({category,subCategories,breadCrumb}))
+    //dispatch(getStructureCategory({category,subCategories,breadCrumb}))
+    callCategoryStructure()
   },[breadCrumb,subCategories,category])
   
   useEffect(()=>{
@@ -101,7 +107,8 @@ const DetailedProduct = () => {
     openDialog:openDialogStructure,
     toggleDialog:toggleDialogStructure,
     multipleFieldName:fieldName,
-    category
+    category,
+    callCategoryStructure
   }
 
   const dialogFieldProps={
@@ -144,12 +151,20 @@ const DetailedProduct = () => {
         setCategory={setCategory}
         toggleDialog={toggleDialog}
       />
-      <FormButton 
+
+      <DisplayWholeCategoryFieldsTable
+        toggleDialogField={toggleDialogField}
+        toggleDialogStructure={toggleDialogStructure}
+        setFieldName={setFieldName}
+        setCategory={setCategory}
+        callCategoryStructure={callCategoryStructure}
+      />
+      {/*<FormButton 
         className="addFirstButton"
         onClick={()=>toggleDialogField()}
       >
           Anadir campo a {categoryObject.name}
-      </FormButton>
+      </FormButton>*/}
       
       <DialogsOfProductsDetails
         searchSubcategoriesProps={searchSubcategoriesProps}
@@ -159,9 +174,17 @@ const DetailedProduct = () => {
         newProductProps={newProductProps}
         addFilterDialogProps={addFilterDialogProps}
       />
+      <DisplayWholeProductsTable
+        toggleAddFilterDialog={toggleAddFilterDialog}
+        toggleNewProductDialog={toggleNewProductDialog}
+        toggleEditProductDialog={toggleEditProductDialog}
+        setEditFields={setEditFields}
+        setSearchProductsFilter={setSearchProductsFilter}
+        searchProductsFilter={searchProductsFilter}
+      />
       
 
-    {strCategory!==undefined && 
+    {/*strCategory!==undefined && 
     
       <div>
         <DisplayCategoryFieldsTable
@@ -169,8 +192,8 @@ const DetailedProduct = () => {
           setFieldName={setFieldName}
           setCategory={setCategory}
         />
-      </div>}      
-    {fields.length>0
+    </div>*/}      
+    {/*productsFromStructure.length>0
       ?
       <p className="titleLabel">
         Products
@@ -203,17 +226,17 @@ const DetailedProduct = () => {
         }>
         Anadir producto a {categoryObject.name}
       </FormButton>
-      }
-      <DisplayProductsTable
+      */}
+      {/*<DisplayProductsTable
         camposState={camposState}
         setEditFields={setEditFields}
         toggleEditProductDialog={toggleEditProductDialog}
         searchProductsFilter={searchProductsFilter}
         setSearchProductsFilter={setSearchProductsFilter}
-      
+        
         updateData={updateData}
         
-      />
+      />*/}
     </div>
   )
 }

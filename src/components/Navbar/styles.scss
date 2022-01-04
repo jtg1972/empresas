@@ -77,6 +77,10 @@
 .is-active{
   display:block;
 }
+a.nav-links{
+  color:white;
+  text-decoration:none;
+}
 
 @media screen and (max-width:768px){
   .navbar{

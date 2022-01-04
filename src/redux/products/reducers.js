@@ -4,6 +4,7 @@ import { orderBusiness } from "../business/business.helpers";
 import getBreadCrumb, { fetchCategories, getSubcategories, searchCategories } from "../products/helpers";
 import types from "./types";
 
+
 const INITAL_STATE={
   allCategories:products,
   categories:[],

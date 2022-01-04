@@ -10,6 +10,7 @@ const DisplayFields = ({
   setFields
 }) => {
 
+
   const inputChange=(cat,e)=>{
     const fieldName=cat.fieldName
     setFields({
@@ -50,7 +51,7 @@ const DisplayFields = ({
               <select {...selectConfig(cat,index)}>
                 <option value="">Select {cat.displayName}</option>
                 {cat.values.map(v=>
-                  <option value={v.value}>{v.name}</option>)
+                  <option value={v.value}>{v.value}</option>)
                 }
               </select>
             </div>

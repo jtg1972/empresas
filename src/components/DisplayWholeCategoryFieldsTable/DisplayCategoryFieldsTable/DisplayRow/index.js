@@ -2,7 +2,8 @@ import React from 'react'
 import { FcTreeStructure } from 'react-icons/fc'
 import { IoIosRemoveCircleOutline } from 'react-icons/io'
 import { useDispatch, useSelector } from 'react-redux'
-import { removeFieldCategory } from '../../../redux/structure/actions'
+import { removeFieldCategory } from '../../../../redux/structure/actions'
+//import { getStructureCategory, removeFieldCategory } from '../../../../redux/structure/actions'
 const mapToState=({structure,product})=>({
   strCategory:structure.categoryStructure,
   categoryStructures:structure.categoryStructures,
@@ -12,6 +13,7 @@ const DisplayRow = ({
   toggleDialogStructure,
   setFieldName,
   setCategory,
+  callCategoryStructure
   
   
 }) => {
@@ -36,7 +38,10 @@ const DisplayRow = ({
               toggleDialogStructure()
               setFieldName(f.fieldName);
               setCategory(strCategory.category)
-            }}
+            
+              
+          }}
+            
           />
         </span>
         }
@@ -49,6 +54,7 @@ const DisplayRow = ({
               category:strCategory.category,
               fieldName:f.fieldName
             }))
+           callCategoryStructure()
           }}
       />
       </td>

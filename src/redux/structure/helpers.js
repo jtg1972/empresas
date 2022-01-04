@@ -29,7 +29,8 @@ export const addMultCat=(data,payload)=>{
   
 }
 
-export const addFieldCat=(data,payload)=>{
+export const addFieldCat=(data,products,productsFC,payload)=>{
+  console.log("payloadddd",payload)
   const resultado=data.map(cat=>{
     if(cat.category!=payload.category){
       return cat
@@ -42,11 +43,29 @@ export const addFieldCat=(data,payload)=>{
       return cat;
     }
   }) 
+  const retProducts=products.map(p=>{
+    if(p.category==payload.category){
+      p[payload.value.fieldName]=""
+      return p
+    }
+    else
+      return p
+  })
+
+  const retProductsFC=productsFC.map(p=>{
+    if(p.category==payload.category){
+      p[payload.value.fieldName]=""
+      return p
+    }
+    else
+      return p
+  })
+
   console.log("resultado",resultado)
-  return resultado; 
+  return {resultado,retProducts,retProductsFC}; 
 }
 
-export const removeFieldCategory=(data,payload)=>{
+export const removeFieldCategory=(data,products,productsFC,payload)=>{
   console.log("paydev",payload);
   const resultado=data.map((cat)=>{
     if(cat.category!=payload.category){
@@ -61,8 +80,42 @@ export const removeFieldCategory=(data,payload)=>{
       return {...cat,fields:nuevoFields}
     }
   })
+  
+  const retProducts=products.map(p=>{
+    if(p.category==payload.category){
+      const newProduct={}
+      Object.keys(p).map(k=>{
+        if(k==payload.fieldName)
+          return null
+        else
+          return newProduct[k]=p[k]
+      })
+      return newProduct
+    }
+    else
+      return p
+  })
+
+  const retProductsFC=productsFC.map(p=>{
+    if(p.category==payload.category){
+      const newProduct={}
+      Object.keys(p).map(k=>{
+        if(k==payload.fieldName)
+          return null
+        else
+          return newProduct[k]=p[k]
+      })
+      return newProduct
+
+    }
+    
+    else
+      return p
+    })
+
+
   console.log("resultado",resultado);
-  return resultado;
+  return {resultado,retProducts,retProductsFC};
 }
 
 export const createStructureEmpty=(data,payload)=>{

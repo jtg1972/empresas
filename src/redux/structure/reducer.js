@@ -54,19 +54,35 @@ const structureReducer=(state=INITIAL_STATE,action)=>{
         categoryStructure:newCatSt.filter(r=>r.category===action.payload.category)[0]
       }
     case types.ADD_FIELD_CATEGORY:
+      console.log("Payloaddd1",action.payload)
       const nCS=
-        addFieldCat(state.categoryStructures,action.payload)
+        addFieldCat(state.categoryStructures,state.products,state.productsFromStructure,action.payload)
       return {
         ...state,
-        categoryStructures:nCS,
-        categoryStructure:nCS.filter(r=>r.category==action.payload.category)[0]
+        categoryStructures:nCS.resultado,
+        categoryStructure:nCS.resultado.filter(r=>r.category==action.payload.category)[0],
+        products:nCS.retProducts,
+        productsFromStructure:nCS.retProductsFC      
       }
     case types.REMOVE_FIELD_CATEGORY:
-      const rCF=removeFieldCategory(state.categoryStructures,action.payload)  
+      const rCF=removeFieldCategory(state.categoryStructures,state.productsFromStructure,state.products,action.payload)  
+      
       return{
         ...state,
-        categoryStructures:rCF,
-        categoryStructure:rCF.filter(r=>r.category==action.payload.category)[0]
+        categoryStructures:rCF.resultado,
+        categoryStructure:rCF.resultado.filter(r=>r.category==action.payload.category)[0],
+        productsFromStructure:rCF.retProductsFC,
+        products:rCF.retProducts,
+        /*
+        fields:state.fields.map(n=>{
+          if(n==action.payload.fieldName){
+            return null
+          }
+          return n
+
+          
+
+        })*/
       }
     case types.CREATE_STRUCTURE_EMPTY:
       const cSE=createStructureEmpty(state.categoryStructures,action.payload)

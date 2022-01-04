@@ -10,6 +10,7 @@ const DisplayCategoryFieldsTable = ({
   toggleDialogStructure, 
   setFieldName,
   setCategory,
+  callCategoryStructure,
 }
 ) => {
   const {strCategory}=useSelector(mapToState)
@@ -27,6 +28,7 @@ const DisplayCategoryFieldsTable = ({
             toggleDialogStructure={toggleDialogStructure}
             setFieldName={setFieldName}
             setCategory={setCategory}
+            callCategoryStructure={callCategoryStructure}
           />)}
       </table>
       

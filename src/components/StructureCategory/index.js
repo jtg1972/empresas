@@ -12,7 +12,8 @@ const StructureCategory = ({
   openDialog,
   toggleDialog,
   category,
-  multipleFieldName
+  multipleFieldName,
+  callCategoryStructure
 }) => {
   
   const [mvInstance,setMvInstance]=useState("")
@@ -43,7 +44,8 @@ const StructureCategory = ({
     onChange:(e)=>setMvInstance(e.target.value),
     onKeyUp:(e)=>{
       if(e.key=="Enter"){
-        addMultipleValueClick()     
+        addMultipleValueClick() 
+        callCategoryStructure()    
       }
     }
   }

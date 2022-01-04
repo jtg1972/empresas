@@ -1,5 +1,6 @@
 import React,{useState} from 'react'
 import './styles.scss'
+import {Link} from 'react-router-dom'
 const Navbar = () => {
   const[isActive,setIsActive]=useState(true);
   const toggleMenu=()=>{
@@ -16,8 +17,8 @@ const Navbar = () => {
           <span className="bar"></span>
         </div>
         {isActive && <ul className="nav-menu active">
-          <li><a className="nav-links">Home</a></li>
-          <li><a className="nav-links">Services</a></li>
+          <li><Link to="/products" className="nav-links">Products</Link></li>
+          <li><Link to="/reports" className="nav-links">Reports</Link></li>
           <li><a className="nav-links">About Us</a></li>
           <li><a className="nav-links">Contact Us</a></li>
           <li><a className="nav-links nav-links-btn">Sign Up</a></li>
