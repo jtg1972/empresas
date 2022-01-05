@@ -1,3 +1,4 @@
+import { findRenderedComponentWithType } from "react-dom/test-utils"
 
 export const getReportResults=(
   productsFromStructure,
@@ -6,6 +7,7 @@ export const getReportResults=(
     //console.log("arggss",productsFromStructure,report)
     const sortResults=productsFromStructure.sort((a,b)=>{
       console.log("ab",a,b)
+      console.log("reportttt",report)
       let conds=report.queryGroups.map(key=>{
         //console.log("abkeys",a[key.fieldName],b[key.fieldName])
         //console.log("akybky",a[key.fieldName],b[key.fieldName],a[key.fieldName]>b[key.fieldName])
@@ -75,28 +77,88 @@ export const getReportResults=(
     let resultado={}
     console.log("entro aquui")
     
-      let qg=queryGroups[i]
-      if(qg==undefined){
-        return db
-      }
-      let group=qg.fieldName;
-      resultado[group]={}
-      resultado[group]['data']=db
-      
+    let qg=queryGroups[i]
+    if(qg==undefined){
+      return db
+    }
+    let group=qg.fieldName;
+    resultado[group]={}
+    resultado[group]['data']=db
+    console.log("querygrouppp",qg)
+    if(qg.declaredType=="number"){
+      const ord=ordena(db,group)
+      console.log("ord",ord)
+      resPrevio={}
+      findMenor(ord,group,qg["intervalRange"])
+      console.log("groupNum",resPrevio)
+      const keys=Object.keys(resPrevio)
+      keys.forEach(k=>{
+        resultado[group][k]=createObjectGroup(resPrevio[k],queryGroups,i+1)
+      })
+      //resultado[group]={...resultado[group],...groupNum}
+
+    }else if(qg.dataType="multipleValue"){
       qg.values.forEach(v=>{
         const sg=db.filter(d=>{
-          console.log('dgroup,v.value',d[group],v.value)
+          //console.log('dgroup,v.value',d[group],v.value)
           return d[group]==v.value
         })
-        console.log("sg",sg)
-        
-        
         resultado[group][v.value]=createObjectGroup(sg,queryGroups,i+1)
+
+      })
+        //console.log("sg",sg)
+        
+        
   
       
-    })
-    console.log("resultado",resultado)
+     }
+    //console.log("resultado",resultado)
     return resultado
+  }
+  const ordena=(db,group)=>{
+    const ordered=db.sort((a,b)=>{
+      if(a[group]>b[group])
+        return 1
+      else 
+        return -1
+    })
+    return ordered
+  }
+  let resPrevio={}
+
+  const findMenor=(ordered=[],group,range)=>{
+    if(ordered.length==0){
+      return []
+    }else{
+    console.log("ordered",ordered,ordered.length,group,ordered[0][group])
+    const primero=ordered[0][group]
+    const limiteInferior=Math.floor(primero/range)*range
+    const limiteSuperior=limiteInferior+range
+    const listaGrupo=[]
+    let rep=0
+    ordered.forEach(o=>{
+      console.log("comp",o[group],limiteSuperior,limiteInferior)
+      if(o[group]>=limiteInferior && 
+        o[group]<limiteSuperior){
+          listaGrupo.push(o)
+          rep++
+          //ordered.shift()
+      } 
+    })
+    console.log("listagroup ordered",listaGrupo,ordered)
+    const ord=ordered.slice(rep)
+    console.log("ord",ord)
+    /*for(let j=0;j<rep;j++){
+      ordered.shift();
+      console.log("orderedpop",ordered)
+    }*/
+    const titulo=group+limiteInferior+"tolessthan"+limiteSuperior
+    if(listaGrupo.length>0){
+      resPrevio={...resPrevio,[titulo]:listaGrupo}
+    }
+    findMenor(ord,group,range)
+    
+  }
   }
 
   const displayReport=(reportResults)=>{
@@ -155,11 +217,13 @@ export const getReportResults=(
       console.log("reportResultkey",Object.keys(reportResults))
       //ver={...ver,tit:reportResults}
       //console.log("ver",ver)
-      
+      if(reportResults.length>0){
       indexResp++;
       console.log("indexresp",indexResp)
+      
       ver={...ver,[indexResp]:reportResults}
       headers={...headers,[indexResp]:argh}
+      }
 
       return {}
     }

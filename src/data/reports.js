@@ -124,8 +124,15 @@ export default [{
   }]
 },{
   category:2,
-  name:"Por grupos de brand y type of milk",
-  queryFields:[{
+  name:"Por price, grupos de brand y type of milk",
+  queryFields:[
+    {
+      dataType:"singleValue",
+      declaredType:"number",
+      displayName:"Price",
+      fieldName:"price"
+    },
+    {
     dataType:"singleValue",
     declaredType:"string",
     displayName:"Name",
@@ -185,6 +192,11 @@ export default [{
     }]
   }],
   queryGroups:[{
+    dataType:"singleValue",
+    declaredType:"number",
+    displayName:"Price",
+    fieldName:"price"
+  },{
     dataType:"multipleValue",
     declaredType:"string",
     displayName:"Brand",

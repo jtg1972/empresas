@@ -8,6 +8,7 @@ import ShowReport from '../../components/ShowReport'
 import { fetchCategories } from '../../redux/products/actions'
 import { addQueryField, addQueryGroup, createReport, removeQueryField, removeQueryGroup } from '../../redux/reports/actions'
 import { getStructureCategory } from '../../redux/structure/actions'
+import NumberGroupRegularIntervalDialog from './NumberGroupRegularIntervalDialog'
 import './styles.scss'
 
 const mapToState=({structure,product,reports})=>({
@@ -34,7 +35,11 @@ const Reports = () => {
   
   const [openDialog,setOpenDialog]=useState(false)
   const toggleDialog=()=>setOpenDialog(!openDialog)
-  
+  const [openRegularIntervalDialog,setOpenRegularIntervalDialog]=useState(false)
+  const toggleRegularIntervalDialog=()=>setOpenRegularIntervalDialog(!openRegularIntervalDialog)
+  const [intervalRange,setIntervalRange]=useState(0)
+
+  const [field,setField]=useState({})
   const dispatch=useDispatch()
   
   const {
@@ -119,8 +124,18 @@ const Reports = () => {
                   style={{marginRight:"5px"}} 
                   type="checkbox"
                   onChange={e=>{
-                    if(e.target.checked==true)
-                      dispatch(addQueryGroup(x))
+                    if(e.target.checked==true){
+                      if(x["declaredType"]!="number"){
+                      
+                        
+                        dispatch(addQueryGroup(x))
+                      }else if(x["declaredType"]=="number"){
+                        console.log("number")
+                        setField(x)
+                        toggleRegularIntervalDialog()
+                      }
+
+                    }
                     else{
                       dispatch(removeQueryGroup(x.fieldName))
                     }
@@ -152,6 +167,16 @@ const Reports = () => {
       <SearchSubcategories
         {...searchSubcategoriesProps}
       />
+      <NumberGroupRegularIntervalDialog
+        openDialog={openRegularIntervalDialog}
+        toggleDialog={toggleRegularIntervalDialog}
+        intervalRange={intervalRange}
+        setIntervalRange={setIntervalRange}
+        field={field}
+      />
+
+      
+      
       
 
     </div>
