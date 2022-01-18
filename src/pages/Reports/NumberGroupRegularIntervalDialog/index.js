@@ -9,7 +9,8 @@ const NumberGroupRegularIntervalDialog = ({
   toggleDialog,
   intervalRange,
   setIntervalRange,
-  field
+  field,
+  setRangeOptionsVisible
 }) => {
   /*useEffect(()=>{
     setIntervalRange(0)
@@ -30,6 +31,7 @@ const NumberGroupRegularIntervalDialog = ({
             console.log("Interange",intervalRange)
             const nuevo={...field,intervalRange:parseInt(intervalRange)}
             dispatch(addQueryGroup(nuevo))
+            setRangeOptionsVisible(false)
             toggleDialog()
           }
         }}/>

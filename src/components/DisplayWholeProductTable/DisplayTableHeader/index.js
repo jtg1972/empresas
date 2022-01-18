@@ -7,8 +7,8 @@ const DisplayTableHeader = ({
   toggleAddFilterDialog,
   setValues,
   setSearchProductsFilter,
-  toggleNewProductDialog
-
+  toggleNewProductDialog,
+  setShowTable
 }) => {
   return (
   
@@ -17,6 +17,7 @@ const DisplayTableHeader = ({
       setValues={setValues}
       setSearchProductsFilter={setSearchProductsFilter}
       toggleNewProductDialog={toggleNewProductDialog}
+      setShowTable={setShowTable}
       />)
   }
     

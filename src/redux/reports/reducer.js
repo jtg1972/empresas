@@ -69,6 +69,8 @@ export default (state=INITIAL_STATE,action)=>{
       const results=getReportResults(action.payload,state.report)     
       return {
         ...state,
+        queryFields:[],
+        queryGroups:[],
         runReportResults:results   
       }
     default:

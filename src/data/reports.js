@@ -138,11 +138,6 @@ export default [{
     displayName:"Name",
     fieldName:"name"
   },{
-    dataType:"singleValue",
-    declaredType:"number",
-    displayName:"Price",
-    fieldName:"price"
-  },{
     dataType:"multipleValue",
     declaredType:"string",
     displayName:"Food Type",

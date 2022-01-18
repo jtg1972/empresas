@@ -9,6 +9,7 @@ import { fetchCategories } from '../../redux/products/actions'
 import { addQueryField, addQueryGroup, createReport, removeQueryField, removeQueryGroup } from '../../redux/reports/actions'
 import { getStructureCategory } from '../../redux/structure/actions'
 import NumberGroupRegularIntervalDialog from './NumberGroupRegularIntervalDialog'
+import NumberGroupsPersonalizedRanges from './NumberGroupsPersonalizedRanges'
 import './styles.scss'
 
 const mapToState=({structure,product,reports})=>({
@@ -37,9 +38,12 @@ const Reports = () => {
   const toggleDialog=()=>setOpenDialog(!openDialog)
   const [openRegularIntervalDialog,setOpenRegularIntervalDialog]=useState(false)
   const toggleRegularIntervalDialog=()=>setOpenRegularIntervalDialog(!openRegularIntervalDialog)
-  const [intervalRange,setIntervalRange]=useState(0)
-
+  const [openPersonalizedIntervalDialog,setOpenPersonalizedIntervalDialog]=useState(false)
+  const togglePersonalizedIntervalDialog=()=>setOpenPersonalizedIntervalDialog(!openPersonalizedIntervalDialog)
+  const [intervalRange,setIntervalRange]=useState(100)
+  const [rangeOptionsVisible,setRangeOptionsVisible]=useState(false)
   const [field,setField]=useState({})
+  const [index,setIndex]=useState("")
   const dispatch=useDispatch()
   
   const {
@@ -118,7 +122,7 @@ const Reports = () => {
         <div style={{flex:2,display:"flex"}}>
           <div>
             <p>Select the groups:</p>
-            {formFields.map(v=>v.fields.map(x=>
+            {formFields.map((v)=>v.fields.map((x,i)=>
               <p style={{display:"flex",alignItems:"center"}}>
                 <input 
                   style={{marginRight:"5px"}} 
@@ -130,20 +134,37 @@ const Reports = () => {
                         
                         dispatch(addQueryGroup(x))
                       }else if(x["declaredType"]=="number"){
-                        console.log("number")
+                        setRangeOptionsVisible(true)
+                        setIndex(x["fieldName"])
+                        /*console.log("number")
                         setField(x)
-                        toggleRegularIntervalDialog()
+                        toggleRegularIntervalDialog()*/
                       }
 
                     }
                     else{
                       dispatch(removeQueryGroup(x.fieldName))
+                      setRangeOptionsVisible(false)
                     }
                     console.log("targe",e.target.checked)
                     //console.log("qf",queryFields)
                   }}
                   /> 
                   {x.fieldName}
+              
+              {rangeOptionsVisible==true && index==x["fieldName"] ?
+                <>
+                  <FormButton onClick={()=>{
+                    setField(x)
+                    toggleRegularIntervalDialog()
+                  }}>Uniform Ranges</FormButton>
+                  <FormButton
+                  onClick={()=>{
+                    setField(x)
+                    togglePersonalizedIntervalDialog()
+                  }}>Personalized Ranges</FormButton>
+                </>
+              :""}
               </p>
             ))}
           </div>
@@ -173,7 +194,18 @@ const Reports = () => {
         intervalRange={intervalRange}
         setIntervalRange={setIntervalRange}
         field={field}
+        setRangeOptionsVisible={setRangeOptionsVisible}
       />
+      <NumberGroupsPersonalizedRanges
+        openDialog={openPersonalizedIntervalDialog}
+
+
+        toggleDialog={togglePersonalizedIntervalDialog}
+        field={field}
+        setRangeOptionsVisible={setRangeOptionsVisible}
+      />
+
+
 
       
       

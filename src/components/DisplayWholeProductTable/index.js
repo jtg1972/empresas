@@ -18,7 +18,8 @@ const DisplayWholeProductsTable = ({
   toggleEditProductDialog,
   setEditFields,
   setSearchProductsFilter,
-  searchProductsFilter
+  searchProductsFilter,
+  setShowTable
 }) => {
   const dispatch=useDispatch()
   const [camposState,setCamposState]=useState([])
@@ -45,6 +46,7 @@ const DisplayWholeProductsTable = ({
       setValues={setValues}
       setSearchProductsFilter={setSearchProductsFilter}
       toggleNewProductDialog={toggleNewProductDialog}
+      setShowTable={setShowTable}
       />
       <DisplayProductsTable
         camposState={camposState}

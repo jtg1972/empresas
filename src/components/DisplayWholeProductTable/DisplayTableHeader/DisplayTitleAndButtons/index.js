@@ -19,8 +19,8 @@ const DisplayTitleAndButtons = ({
   toggleAddFilterDialog,
   setValues,
   setSearchProductsFilter,
-  toggleNewProductDialog
-
+  toggleNewProductDialog,
+  setShowTable
 
 }) => {
   const dispatch=useDispatch()
@@ -76,7 +76,9 @@ const DisplayTitleAndButtons = ({
         dispatch(runReport(
           productsFromStructure,
           
-        ))}}
+        ))
+        setShowTable(true)
+      }}
       >
         Start report
       </FormButton>

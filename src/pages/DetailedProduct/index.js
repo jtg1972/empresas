@@ -9,6 +9,7 @@ import DialogsOfProductsDetails from '../../components/DialogsOfProductsDetails'
 import DisplayWholeCategoryFieldsTable from '../../components/DisplayWholeCategoryFieldsTable'
 import DisplayWholeProductsTable from '../../components/DisplayWholeProductTable'
 import ShowReport from '../../components/ShowReport'
+import ShowTable from '../Reports/ShowTable'
 
 const mapToState=({structure,product})=>({
   strCategory:structure.categoryStructure,
@@ -63,6 +64,7 @@ const DetailedProduct = () => {
   const[editFields,setEditFields]=useState({})
   const [values,setValues]=useState({})
   const [searchProductsFilter,setSearchProductsFilter]=useState(false)
+  const [showTable,setShowTable]=useState(false)
   let catList=[];
   let campos=[];
   console.log("catobjectrr",categoryObject)
@@ -174,6 +176,7 @@ const DetailedProduct = () => {
         newProductProps={newProductProps}
         addFilterDialogProps={addFilterDialogProps}
       />
+     
       <DisplayWholeProductsTable
         toggleAddFilterDialog={toggleAddFilterDialog}
         toggleNewProductDialog={toggleNewProductDialog}
@@ -181,7 +184,9 @@ const DetailedProduct = () => {
         setEditFields={setEditFields}
         setSearchProductsFilter={setSearchProductsFilter}
         searchProductsFilter={searchProductsFilter}
+        setShowTable={setShowTable}
       />
+      {showTable?<ShowTable/>:""}
       
 
     {/*strCategory!==undefined && 
