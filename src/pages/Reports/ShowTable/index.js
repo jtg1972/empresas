@@ -19,7 +19,7 @@ const ShowTable = () => {
   const [headersPrint,setHeadersPrint]=useState({})
   console.log("headerssss",headers,typeof headers)
 
-  const getStatistics=(i,index,group,groupValue)=>{
+  const getStatistics=(i,index,group,groupValue,arr)=>{
     console.log("stadistics",stats[i][index])
     let resultado=[];
     let total=[]
@@ -28,6 +28,9 @@ const ShowTable = () => {
       stadistics={stats[i][index]}
       group={group}
       groupValue={groupValue}
+      i={i}
+      index={index}
+      arr={arr}
     />
     Object.keys(stats[i][index]).forEach(key=>{
       //console.log("key",key,stats[i][index][key])
@@ -72,6 +75,8 @@ const ShowTable = () => {
   const displayTitles=()=>{
     const title=[]
     let printed={}
+    let arr=[];
+    if(Object.keys(headers).length>0){
     Object.keys(headers).forEach((h,i)=>{
       //console.log("h",h)
       const hvar=headers[h]
@@ -79,42 +84,75 @@ const ShowTable = () => {
       
       hvar.forEach((c,index)=>{
         if(index%2==0){
+
           if(printed[c]!==undefined){
             if(printed[c]!==hvar[index+1]){
-              //printed={...printed,[c]:hvar[index+1]}
-              const stat1=getStatistics(i,index/2,c,hvar[index+1])
+              printed={...printed,[c]:hvar[index+1]}
+              arr.splice(index)
+              arr.push(c)
+              arr.push(hvar[index+1])
+              console.log("arrit",arr)
+              const stat1=getStatistics(i,index/2,c,hvar[index+1],[...arr])
               
               title.push(<p>{displayValue(headers[h][index],hvar[index+1],index)}</p>)
               title.push(stat1)
-              for(let x=index;x<hvar.length;x++){
+              for(let x=index+2;x<hvar.length;x+=2){
                 printed[hvar[x]]=undefined
               }
+              
             }
           }else{
             printed={...printed,[c]:hvar[index+1]}
-            const stat=getStatistics(i,index/2,c,hvar[index+1])
+            arr.push(c)
+            arr.push(hvar[index+1])
+            console.log("arrit",arr)  
+            const stat=getStatistics(i,index/2,c,hvar[index+1],[...arr])
 
               title.push(<p>{displayValue(headers[h][index],hvar[index+1],index)}</p>)
               title.push(stat)
           }
         }
       }
-      )
+    )
       const showData=showRecords(i)
       title.push(showData)
       
 
       
     })
-    return <div style={{height:"auto"}}>{title}</div>
+    return <div style={{marginTop:"10px",height:"auto"}}>{title}</div>
+  }else{
+    title.push("Resultado Total")
+    getStatisticsPlain()
+    const showData=showRecords(-1) 
+    title.push(<ShowStadistics
+      stadistics={{...stats,grandTotal:data.length}}
+      group="Total"
+      /> )
+    title.push(showData)
+    return <div style={{marginTop:"10px",height:"auto"}}>{title}</div>
+
+  }
+  }
+  const getStatisticsPlain=()=>{
+    console.log("stats123",stats)
   }
   const showRecords=(i)=>{
-    const records=data[i]
+    let records=[]
+    if(i!==-1){
+      records=data[i]  
+    }else{
+      records=data
+    }
+    
     const res=[]
     res.push(<ShowDataTable
       data={records}/>)
     
     return res
+  }
+  if(Object.keys(data).length==0){
+    return <h2 style={{fontSize:"17px",marginTop:"10px"}}>There are no records for this report</h2>
   }
 
   return (

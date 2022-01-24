@@ -64,21 +64,26 @@ const DisplayTitleAndButtons = ({
         Anadir producto a {categoryObject.name}
       </FormButton>
       }
-      <select onChange={(e)=>
+      <select style={{padding:"4px",outline:"none",
+      marginLeft:"10px"}}onChange={(e)=>
         setReportName(e.target.value)
       }>
+        <option value="">Selecciona un reporte</option>
         {categoryReports.map(x=>
           <option value={x.name}>{x.name}</option>)}
       </select>
       <FormButton
+        style={{background:"black",color:"white",
+      width:"auto"}}
         onClick={()=>{
-        dispatch(getReport(reportName))
-        dispatch(runReport(
-          productsFromStructure,
-          
-        ))
-        setShowTable(true)
-      }}
+          if(reportName!=""){
+            dispatch(getReport(reportName))
+            dispatch(runReport(
+              productsFromStructure,
+              
+            ))
+            setShowTable(true)
+        }}}
       >
         Start report
       </FormButton>

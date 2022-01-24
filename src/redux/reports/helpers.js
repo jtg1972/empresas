@@ -60,19 +60,65 @@ export const getReportResults=(
       }
       return respuesta
     })
-
-    //console.log("res",sortResults,report.queryGroups)
-    const createGroupsObject=createObjectGroup(sortResults,report.queryGroups,0,report)
+    const totalVars=add([...report.queryFields],[...report.queryGroups])
+    const sortResults1=selectFieldsData(sortResults,
+      totalVars)
+    console.log("res1234",sortResults,totalVars)
+    let createGroupsObject={}
+    if(report.queryGroups.length>0){
+      createGroupsObject=createObjectGroup(sortResults1,report.queryGroups,0,report)
+    }
     ver={}
     headers={}
     statsFinal={}
     statsIndex=0
     indexResp=-1
-    const dr=displayReport(createGroupsObject,"",[])
-    const st=getStats(createGroupsObject,[],report.queryFields)
-    console.log("resultadofinal",ver,headers,statsFinal)
-    //console.log(st)
-   return {data:ver,headers,stats:statsFinal,nuevoReporte:nuevoGrupoReporte}
+    if(report.queryGroups.length>0){
+      const dr=displayReport(createGroupsObject,"",[])
+      const st=getStats(createGroupsObject,[],report.queryFields)
+      console.log("resultadofinal",ver,headers,statsFinal)
+      //console.log(st)
+      return {data:ver,headers,stats:statsFinal,nuevoReporte:nuevoGrupoReporte}
+    }else{
+      console.log("variabless",report.queryFields,sortResults1,sortResults1)
+      console.log("gfstats",getFieldsStadistics(report.queryFields,sortResults1,sortResults1))
+      return {data:sortResults1,headers:{},stats:getFieldsStadistics(report.queryFields,sortResults1,sortResults1),nuevoReporte:report}
+    }
+  }
+  const findInQueryFields=(res,qg)=>{
+    
+    for(let r in res){
+      console.log("rfn qgfn",res[r]["fieldName"],qg["fieldName"])
+      if(res[r]["fieldName"]==qg["fieldName"]){
+        return true
+      }
+    }
+    return false
+  }
+
+  const add=(queryFields,queryGroups)=>{
+    let res=[...queryFields];
+    [...queryGroups].forEach(qg=>{
+      const existe=findInQueryFields(res,qg)
+      console.log("existe",existe)
+      if(!existe){
+        res.push(qg)
+      }
+    })
+    console.log("qf qg add",queryFields,queryGroups,res)
+    return res
+  }
+
+  const selectFieldsData=(data,fields)=>{
+    const newData=data.map(d=>{
+      const newRec={}
+      fields.forEach(f=>{
+        newRec[f.fieldName]=d[f.fieldName]
+      })
+      return newRec
+    })
+    console.log("newdata",newData)
+    return newData
   }
 
   let nuevoGrupoReporte={}

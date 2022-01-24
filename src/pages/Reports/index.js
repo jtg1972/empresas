@@ -119,6 +119,10 @@ const Reports = () => {
             </p>
           ))}
         </div>
+        <div style={{flex:1}}>
+            <p>Order of the fields</p>
+            {queryFields.map(qf=><p>{qf.fieldName}</p>)}
+        </div>
         <div style={{flex:2,display:"flex"}}>
           <div>
             <p>Select the groups:</p>

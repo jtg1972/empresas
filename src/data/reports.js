@@ -9,14 +9,7 @@ export default [{
       declaredType:"string"
     
   }],
-  queryGroups:[{
-    
-    fieldName:"name",
-    displayName:"Name",
-    dataType:"singleValue",
-    declaredType:"string"
-  
-  }]
+  queryGroups:[]
 },
 {
   category:0,
@@ -35,12 +28,7 @@ export default [{
   }
   ],
   queryGroups:[{
-    fieldName:"name",
-    displayName:"Name",
-    dataType:"singleValue",
-    declaredType:"string"
     
-  },{
     fieldName:"price",
     displayName:"Price",
     declaredType:"number",
