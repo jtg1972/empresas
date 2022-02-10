@@ -15,8 +15,9 @@ const DisplayCategoryFieldsTable = ({
 ) => {
   const {strCategory}=useSelector(mapToState)
   return (
-    strCategory!==undefined 
-    && 
+    (strCategory!==undefined && strCategory.fields 
+    && strCategory.fields?.length>0)
+    ?
     <div>
       <table>
         <DisplayHeader/>
@@ -33,7 +34,7 @@ const DisplayCategoryFieldsTable = ({
       </table>
       
     </div>
-      
+     :"" 
 
   )
 }

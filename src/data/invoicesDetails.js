@@ -1,0 +1,36 @@
+export default [{
+  id:1,
+  invoice:1,
+  product:1,
+  price:60,
+  quantity:5,
+  category:6
+},{
+  id:2,
+  invoice:1,
+  product:2,
+  price:80,
+  quantity:3,
+  category:6
+},{
+  id:3,
+  invoice:1,
+  product:3,
+  price:35,
+  quantity:7,
+  category:6
+},{
+  id:4,
+  invoice:2,
+  product:2,
+  price:67,
+  quantity:2,
+  category:6
+},{
+  id:5,
+  invoice:2,
+  product:3,
+  price:100,
+  quantity:9,
+  category:6
+}]

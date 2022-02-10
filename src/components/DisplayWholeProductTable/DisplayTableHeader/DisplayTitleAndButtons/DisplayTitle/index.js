@@ -15,7 +15,7 @@ const DisplayTitle = () => {
       </p>
       :
       <p className="titleLabel">
-        There are not products in this category
+        There are not elements in this category
       </p>
   )
 }

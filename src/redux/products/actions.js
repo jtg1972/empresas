@@ -49,3 +49,4 @@ export const getCategory=(payload)=>({
   type:types.GET_PRODUCT_CATEGORIES,
   payload
 })
+

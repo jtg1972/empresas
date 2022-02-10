@@ -78,3 +78,22 @@ export const fetchFilterResults=(payload)=>({
 export const deleteAllFilters=()=>({
   type:types.DELETE_ALL_FILTERS
 })
+
+export const getStructureClient=(payload)=>{
+  console.log("entro accion")
+  return {
+    type:types.GET_STRUCTURE_CLIENT,
+    payload
+  }
+}
+
+export const searchProductsFromClient=(payload)=>({
+  type:types.SEARCH_PRODUCTS_FROM_CLIENT,
+  payload
+})
+
+export const cleanSearchProductsFromClient=()=>({
+  type:types.CLEAN_SEARCH_PRODUCTS_FROM_CLIENT
+})
+
+

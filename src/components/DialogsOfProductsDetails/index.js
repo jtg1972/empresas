@@ -1,6 +1,13 @@
 import React from 'react'
+import { searchInvoices } from '../../redux/invoices/actions'
 import AddFilter from '../AddFilter'
 import Dialog from '../Dialog'
+import AddDialogClientForm from '../DisplayClientsBlock/AddDialogClientForm'
+import AddDialogInvoiceForm from '../DisplayClientsBlock/AddDialogInvoiceForm'
+import AddDialogProductForm from '../DisplayClientsBlock/AddDialogProductForm'
+import SearchClients from '../DisplayClientsBlock/DisplayClients/SearchClients'
+import SearchInvoices from '../DisplayClientsBlock/DisplayInvoices/SearchInvoices'
+import EditProductDetail from '../DisplayClientsBlock/EditProductDetail'
 import EditProduct from '../EditProduct'
 import NewProduct from '../NewProduct'
 import SearchSubcategories from '../SearchSubcategories'
@@ -50,9 +57,13 @@ const DialogsOfProductsDetails = ({
   hasAddFilter,
   values,
   setValues*/
-  addFilterDialogProps
-
-
+  addFilterDialogProps,
+  addClientDialogProps,
+  addInvoiceDialogProps,
+  searchClientsDialogProps,
+  searchInvoiceDialogProps,
+  addProductDialogProps,
+  editProductDetailDialogProps,
 }) => {
   return (
     <>
@@ -100,7 +111,24 @@ const DialogsOfProductsDetails = ({
         values={values}
         setValues={setValues}*/
       />
-
+      <AddDialogClientForm
+        {...addClientDialogProps}
+      />
+      <AddDialogInvoiceForm
+        {...addInvoiceDialogProps}
+      />
+      <SearchClients
+        {...searchClientsDialogProps}
+      />
+      <SearchInvoices
+        {...searchInvoiceDialogProps}
+      />
+      <AddDialogProductForm
+        {...addProductDialogProps}
+      />
+      <EditProductDetail
+        {...editProductDetailDialogProps}
+      />
     </>
   )
 }

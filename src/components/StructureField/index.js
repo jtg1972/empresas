@@ -26,8 +26,8 @@ const StructureField = ({
   
   const [fieldName,setFieldName]=useState("")
   const [displayName,setDisplayName]=useState("")
-  const [type,setType]=useState("singleValue")
-  
+  const [type,setType]=useState("")
+  const [declaredType,setDeclaredType]=useState("")
   const dispatch=useDispatch()
     
   const onAddFieldClick=()=>{
@@ -36,7 +36,8 @@ const StructureField = ({
       value:{
         fieldName,
         displayName,
-        dataType:type
+        dataType:type,
+        declaredType
       }
     }))
     dispatch(getStructureCategory({category,subCategories,breadCrumb}))
@@ -66,6 +67,11 @@ const StructureField = ({
     onChange:(e)=>setType(e.target.value)
   }
 
+  const selectConfigDeclaredType={
+    className:"noOutline",
+    onChange:(e)=>setDeclaredType(e.target.value)
+  }
+
   const buttonAddFieldConfig={
     className:"marginTop10",
     onClick:()=>onAddFieldClick()
@@ -82,9 +88,19 @@ const StructureField = ({
       <FormInput
         {...inputDisplayNameConfig}/>      
       <select {...selectConfig}>
+        <option value="">Select the type</option>
         <option value="singleValue">Single Value</option>
         <option value="multipleValue">Multiple Value</option>
+        
       </select>
+      {type=="singleValue" && 
+      <select {...selectConfigDeclaredType}>
+        <option value="">Select the data type</option>
+        <option value="string">String</option>
+        <option value="numeric">Numeric</option>
+        <option value="date">Date</option>
+        <option value="relacion1toM">Relacion 1 a muchos</option>
+      </select>}
       <FormButton {...buttonAddFieldConfig}>
         Add Field
       </FormButton>

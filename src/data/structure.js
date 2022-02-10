@@ -1,6 +1,10 @@
 export default [
   {
     category:0,
+    fields:[]
+    
+  },{
+    category:1,
     fields:[{
       fieldName:"name",
       displayName:"Name",
@@ -11,10 +15,7 @@ export default [
       displayName:"Price",
       dataType:"singleValue",
       declaredType:"number"
-    }]
-  },{
-    category:1,
-    fields:[{
+    },{
       fieldName:"foodType",
       displayName:"Food Type",
       dataType:"multipleValue",
@@ -96,5 +97,89 @@ export default [
          name:"small"
        }]
     }]
-  }  
+  },{
+    category:4,
+    fields:[
+      {
+      fieldName:"name",
+      displayName:"name",
+      dataType:"singleValue",
+      declaredType:"string",
+      
+    },,
+    {
+      fieldName:"invoicesRef",
+      displayName:"Invoices",
+      dataType:{
+        relation:"relation1toM",
+        category:5,
+        localKey:"id",
+        foreignKey:"client"
+      }
+    }]
+  },{
+    category:5,
+    fields:[{
+      fieldName:"id",
+      displayName:"Id",
+      dataType:{
+        relation:"relation1ToM",
+        category:6,
+        localKey:"id",
+        foreignKey:"id"
+      }
+    },
+    {
+      fieldName:"createdDate",
+      displayName:"Created Date",
+      dataType:"singleValue",
+      declaredType:"date"
+    },
+    {
+      fieldName:"clientRef",
+      displayName:"Client",
+      dataType:{
+        relation:"relation1to1",
+        category:4,
+        localKey:"client",
+        foreignKey:"id"
+      }
+    }
+  ]
+  },
+  {
+    category:6,
+    fields:[{
+      fieldName:"id",
+      displayName:"Id",
+      declaredType:"number",
+      dataType:"singleValue"
+    },{
+      fieldName:"invoice",
+      displayName:"Invoice",
+      declaredType:"number",
+      dataType:"singleValue"
+    },{
+      fieldName:"product",
+      displayName:"Product",
+      declaredType:"number",
+      dataType:"singleValue"
+        
+    },{
+      fieldName:"quantity",
+      displayName:"Quantity",
+      declaredType:"number",
+      dataType:"singleValue"
+    },{
+      fieldName:"price",
+      displayName:"price",
+      declaredType:"number",
+      dataType:"singleValue"
+    }
+
+
+      
+    ]
+  }
+  
 ]

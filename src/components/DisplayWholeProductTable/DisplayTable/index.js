@@ -14,8 +14,10 @@ const DisplayTable = ({
   updateData,
 }) => {
   const dispatch=useDispatch()
+  console.log("fieldsleng",fields.length,fields)
   return (
-    <table>
+    fields.length==1 && 
+    fields[0].length==0 ? "": <table>
       <tr>
         {fields.map(f=>{
           return f.map(x=><th>{x}</th>)

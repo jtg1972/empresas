@@ -234,3 +234,50 @@ export const fetchFilterResults=(data,payload)=>{
   return sortResults
 }
 
+export const searchProductsFromClient=(payload,products)=>{
+  const s=payload.split(" ")
+  console.log("s",s)
+  let resultado={}
+  for(let i=1;i<=s.length;i++){
+    resultado[i]=[]
+  }
+  let already=[]
+  console.log("antes",resultado)
+  products.forEach(pr=>{
+    console.log("pr",pr)
+    let matches=0
+    already=[]
+    for(let key in pr){
+      console.log("prkey key",pr[key],key)
+      for(let skey in s){
+        if(typeof pr[key]!="number"){
+          if(pr[key].includes(s[skey])){
+            if(!already.includes(s[skey])){
+              already.push(s[skey])
+              matches++;
+              break;
+            }
+          }
+          console.log("already",already)
+        }  
+      }
+      
+      
+      
+    }
+    if(matches>=1){
+      console.log("matchesasd",matches)
+      resultado[matches].push(pr)
+    }
+    
+  })
+  let real=[]
+  Object.keys(resultado).forEach(r=>{
+   if(resultado[r].length>0)
+    real=resultado[r]
+  })
+  console.log("resultado",real)
+  return real;
+  }
+
+

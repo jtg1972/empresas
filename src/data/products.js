@@ -31,7 +31,19 @@ export default [
   type:0,
   name:"Refrescos"
 
-},/*{
+},
+{
+  id:4,
+  category:0,
+  type:0,
+  name:"Customers"
+},{
+  id:5,
+  category:0,
+  type:0,
+  name:"Invoices"
+}
+  /*{
   id:6,
   category:5,
   type:0,

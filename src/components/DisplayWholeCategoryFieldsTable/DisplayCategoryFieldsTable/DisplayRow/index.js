@@ -24,11 +24,27 @@ const DisplayRow = ({
       <span>{v.name} &nbsp;</span>
     )
 
+  const displayDatatypeTitle=()=>{
+    console.log("fffffff",f["dataType"]["relation"])
+    if(f.dataType=="singleValue"){
+      return "Single"
+    }else if(f.dataType=="multipleValue"){
+      return "Multiple"
+    }else if(Object.keys(f.dataType).length>0){
+      console.log("fdatype",f["dataType"]["relation"])
+      if(f["dataType"]["relation"]=="relation1toM"){
+        return "Relation 1 to M"
+      }
+      else if(f["dataType"]["relation"]=="relation1to1"){
+        return "Relation 1 to 1"
+      }
+    }
+  }  
   return (
     <tr>
       <td>{f.fieldName}</td>
       <td>{f.displayName}</td>
-      <td>{f.dataType=="singleValue"?"Single":"Multiple"}</td>
+      <td>{displayDatatypeTitle()}</td>
       <td>{f.values!==undefined && displayTypes(f.values)}</td>
       <td>
         {f.dataType=="multipleValue" &&

@@ -1,6 +1,6 @@
 import structure from '../../data/structure'
 import structureProducts from '../../data/structureProducts'
-import { addFieldCat, addMultCat,createStructureEmpty,editProduct,fetchFilterResults,getAllProductsFromCategoryDown,getFormFields,removeFieldCategory } from './helpers'
+import { addFieldCat, addMultCat,createStructureEmpty,editProduct,fetchFilterResults,getAllProductsFromCategoryDown,getFormFields,removeFieldCategory, searchProductsFromClient } from './helpers'
 import types from './types'
 
 const INITIAL_STATE={
@@ -11,7 +11,9 @@ const INITIAL_STATE={
   productsFromStructure:[],
   fieldCriterias:[],
   fields:[],
-  searchProductsFromStructure:[]
+  searchProductsFromStructure:[],
+  structureClient:{},
+  searchedProductsFromClient:[]
   //productsFromFilter:[]
 }
 
@@ -158,6 +160,26 @@ const structureReducer=(state=INITIAL_STATE,action)=>{
     case types.DELETE_ALL_FILTERS:
       return {...state,fieldCriterias:[],
       searchProductsFromStructure:[]}
+    case types.GET_STRUCTURE_CLIENT:
+      console.log("payloadyx",action.payload)
+      const xa=state.categoryStructures.find(
+        c=>c.category==action.payload
+      )
+      console.log("xa",xa)
+      return {...state,
+        structureClient:xa
+      }
+    case types.SEARCH_PRODUCTS_FROM_CLIENT:
+      const spfc=searchProductsFromClient(action.payload,state.products)
+      return {
+        ...state,
+        searchedProductsFromClient:spfc
+      }
+    case types.CLEAN_SEARCH_PRODUCTS_FROM_CLIENT:
+      return {
+        ...state,
+        searchedProductsFromClient:[]
+      }
     default:
       return state;
 

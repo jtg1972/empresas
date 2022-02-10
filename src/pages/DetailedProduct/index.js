@@ -10,6 +10,8 @@ import DisplayWholeCategoryFieldsTable from '../../components/DisplayWholeCatego
 import DisplayWholeProductsTable from '../../components/DisplayWholeProductTable'
 import ShowReport from '../../components/ShowReport'
 import ShowTable from '../Reports/ShowTable'
+import DisplayClientsBlock from '../../components/DisplayClientsBlock'
+import { searchInvoices } from '../../redux/invoices/actions'
 
 const mapToState=({structure,product})=>({
   strCategory:structure.categoryStructure,
@@ -40,9 +42,11 @@ const DetailedProduct = () => {
     id:0,
     name:"Categories"
   }]);*/
+  const [clientId,setClientId]=useState()
   const [fieldName,setFieldName]=useState("");
   //variables y funciones de los dialogos
   const [openDialog,setOpenDialog]=useState(false);
+  console.log("subcategoriesss",subCategories)
   const toggleDialog=()=>{
         setOpenDialog(!openDialog)
 
@@ -58,6 +62,18 @@ const DetailedProduct = () => {
   const toggleEditProductDialog=()=>setOpenEditProductDialog(!openEditProductDialog)
   const [openAddFilterDialog,setOpenAddFilterDialog]=useState(false)
   const toggleAddFilterDialog=()=>setOpenAddFilterDialog(!openAddFilterDialog)
+  const [openAddClientDialog,setOpenAddClientDialog]=useState(false)
+  const toggleAddClientDialog=()=>setOpenAddClientDialog(!openAddClientDialog)
+  const [openAddInvoiceDialog,setOpenAddInvoiceDialog]=useState(false)
+  const toggleAddInvoiceDialog=()=>setOpenAddInvoiceDialog(!openAddInvoiceDialog)
+  const [openSearchClientDialog,setOpenSearchClientDialog]=useState(false)
+  const toggleSearchClientDialog=()=>setOpenSearchClientDialog(!openSearchClientDialog)
+  const [openSearchInvoiceDialog,setOpenSearchInvoiceDialog]=useState(false)
+  const toggleSearchInvoiceDialog=()=>setOpenSearchInvoiceDialog(!openSearchInvoiceDialog)
+  const [openAddProductDialog,setOpenAddProductDialog]=useState(false)
+  const toggleAddProductDialog=()=>setOpenAddProductDialog(!openAddProductDialog)
+  const [openEditProductDetailDialog,setOpenEditProductDetailDialog]=useState(false)
+  const toggleEditProductDetailDialog=()=>setOpenEditProductDetailDialog(!openEditProductDetailDialog)
   //terminan variables y funciones de los dialogos
 
   const[camposState,setCamposState]=useState([])
@@ -75,6 +91,7 @@ const DetailedProduct = () => {
 
   useEffect(()=>{
     dispatch(fetchCategories(category))
+    setShowTable(false)
   },[category])
 
   useEffect(()=>{
@@ -88,6 +105,15 @@ const DetailedProduct = () => {
 
   },[categoryObject])
   
+  const isClientsPage=()=>{
+    if(subCategories.includes(4) ||
+      subCategories.includes(5)
+    ){
+      return true
+    }
+    return false
+  }
+
   const displayTypes=(values)=>
     values.map(v=><span>{v.name} &nbsp;</span>)
 
@@ -146,6 +172,40 @@ const DetailedProduct = () => {
     setSearchProductsFilter,
     searchProductsFilter
   }
+  const addClientDialogProps={
+    openDialog:openAddClientDialog,
+    toggleDialog:toggleAddClientDialog,
+    setCategory:setCategory,
+    clientId,
+    setClientId
+  }
+
+  const addInvoiceDialogProps={
+    openDialog:openAddInvoiceDialog,
+    toggleDialog:toggleAddInvoiceDialog,
+    setCategory:setCategory,
+    clientId:clientId,
+    setClientId
+  }
+
+  const searchClientsDialogProps={
+    openDialog:openSearchClientDialog,
+    toggleDialog:toggleSearchClientDialog
+  }
+  const searchInvoiceDialogProps={
+    openDialog:openSearchInvoiceDialog,
+    toggleDialog:toggleSearchInvoiceDialog
+  }
+
+  const addProductDialogProps={
+    openDialog:openAddProductDialog,
+    toggleDialog:toggleAddProductDialog
+  }
+  const editProductDetailDialogProps={
+    openDialog:openEditProductDetailDialog,
+    toggleDialog:toggleEditProductDetailDialog
+  }
+
   return (
     <div className="detailedProduct">
       <Breadcrumb
@@ -175,8 +235,25 @@ const DetailedProduct = () => {
         editProductProps={editProductProps}
         newProductProps={newProductProps}
         addFilterDialogProps={addFilterDialogProps}
+        addClientDialogProps={addClientDialogProps}
+        addInvoiceDialogProps={addInvoiceDialogProps}
+        searchClientsDialogProps={searchClientsDialogProps}
+        searchInvoiceDialogProps={searchInvoiceDialogProps}
+        addProductDialogProps={addProductDialogProps}
+        editProductDetailDialogProps={editProductDetailDialogProps}
       />
-     
+     {isClientsPage() ?
+      <DisplayClientsBlock
+        openAddClientDialog={openAddClientDialog}
+        toggleAddClientDialog={toggleAddClientDialog}
+        toggleSearchClientDialog={toggleSearchClientDialog}
+        openAddInvoiceDialog={openAddInvoiceDialog}
+        toggleAddInvoiceDialog={toggleAddInvoiceDialog}
+        toggleSearchInvoiceDialog={toggleSearchInvoiceDialog}
+        toggleAddProductDialog={toggleAddProductDialog}
+        toggleEditProductDetailDialog={toggleEditProductDetailDialog}
+        clientId={clientId}
+        setClientId={setClientId}/>:
       <DisplayWholeProductsTable
         toggleAddFilterDialog={toggleAddFilterDialog}
         toggleNewProductDialog={toggleNewProductDialog}
@@ -186,6 +263,7 @@ const DetailedProduct = () => {
         searchProductsFilter={searchProductsFilter}
         setShowTable={setShowTable}
       />
+      }
       {showTable?<ShowTable/>:""}
       
 
