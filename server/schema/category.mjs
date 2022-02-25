@@ -21,7 +21,8 @@ export default gql`
     createCategory(
       name:String!,
       parentCategory:Int,
-      ):Category!
+      ):Category!,
+    deleteCategory(id:Int!):Boolean!
     
     
   }

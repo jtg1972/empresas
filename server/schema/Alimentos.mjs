@@ -4,9 +4,10 @@ import {gql} from 'apollo-server-express'
 export default gql`
   type Alimentos{
     id:Int!
-    grasas:Int
-proteinas:Int
-colesterol:Int
+    Name:String
+Price:Int
+Cost:Int
+Added1:String
 
   }
 
@@ -16,9 +17,10 @@ colesterol:Int
   }
   type Mutation{
     createAlimentos(
-      grasas:Int,
-proteinas:Int,
-colesterol:Int,
+      Name:String,
+Price:Int,
+Cost:Int,
+Added1:String,
 
       ):Alimentos
     

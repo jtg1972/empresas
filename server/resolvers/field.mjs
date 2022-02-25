@@ -1,5 +1,6 @@
 import fs from 'fs'
 import rf from '../models/pivoteModels.mjs'
+import {Op} from 'sequelize'
 const  WriteToFile=async(name,content)=>{ 
   
   let filePath=`${name}.mjs`
@@ -43,12 +44,16 @@ export default{
     createTable:async(parent,args,{db})=>{
       const category=await db.Category.findByPk(args.category)
       let name=category.name
+
+      let cats=category.parentCategories.split(",")
+      cats=cats.map(c=>parseInt(c))
+      cats.push(category.id)
       let content=`import Sequelize from 'sequelize'\n
       class ${name} extends Sequelize.Model{\n
         \tstatic init(sequelize,DataTypes){\n
           \t\treturn super.init({\n`
       const fields=await db.Fields.findAll({
-        where:{category:category.id},
+        where:{category:{[Op.in]:cats}},
         raw:true
       })
       let fields1=fields.map(f=>{

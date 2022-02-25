@@ -5,8 +5,9 @@ import Sequelize from 'sequelize'
         	static init(sequelize,DataTypes){
 
           		return super.init({
-		 grasas:DataTypes.INTEGER,
-		 proteinas:DataTypes.INTEGER,
-		 colesterol:DataTypes.INTEGER},{sequelize})
+		 Name:DataTypes.STRING,
+		 Price:DataTypes.INTEGER,
+		 Cost:DataTypes.INTEGER,
+		 Added1:DataTypes.STRING},{sequelize})
 }}
 export default Alimentos

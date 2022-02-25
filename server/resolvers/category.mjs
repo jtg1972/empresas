@@ -1,4 +1,6 @@
+import { flushSync } from 'react-dom'
 import {Op} from 'sequelize'
+import fs from 'fs'
     
 
 export default{
@@ -41,15 +43,15 @@ export default{
   },
   Query:{
     categories:async(parent,args,{db})=>{
-      const categories=await db.Category.findAll({})
+      const categories=await db.Category.findAll()
       let pc=[]
       const cats=categories.map(c=>{
         pc=c.dataValues.parentCategories.split(",")
         if(pc.length>0){
           pc=pc.map(x=>parseInt(x))
-          pc.push(c.dataValues.category)
+          pc.push(c.dataValues.id)
         }else{
-          pc=[0,c.dataValues.category]
+          pc=[0,c.dataValues.id]
         }
         return {
           id:c.dataValues.id,
@@ -96,6 +98,29 @@ export default{
       },{raw:true})
       return {...category.dataValues,parentCategories:[...parentCategories,category.dataValues.id]}
     },
+    deleteCategory:async(parent,args,{db})=>{
+      const category=await db.Category.findByPk(args.id)
+      if(category==null)
+        return false
+      const sons=await db.Category.findAll({
+        raw:true})
+      for(let s in sons){
+        let parents=sons[s].parentCategories
+        let ps=parents.split(",")
+        ps=ps.map(x=>parseInt(x))
+        if(ps.includes(category.id)){
+          return false
+          
+        }
+      }
+      await db.Fields.destroy({where:{category:category.id}})
+      await category.destroy()
+      fs.unlinkSync(`./models/${category.name}.mjs`)
+      fs.unlinkSync(`./schema/${category.name}.mjs`)
+      fs.unlinkSync(`./resolvers/${category.name}.mjs`)
+      return true
+      
+    }
     
   }
 }
